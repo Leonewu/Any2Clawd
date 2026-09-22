@@ -32,6 +32,15 @@ DEFAULT_DURATION_MS = 3000
 
 MIN_FPS = 20
 
+# Downscale filters. LANCZOS is the smooth default; NEAREST keeps pixel-art edges
+# crisp and produces far fewer intermediate colors, which makes the GIF much
+# smaller (typically 25-30%) at the cost of slightly jaggier rotated shapes.
+RESAMPLE_FILTERS = {
+    "lanczos": Image.Resampling.LANCZOS,
+    "nearest": Image.Resampling.NEAREST,
+    "box": Image.Resampling.BOX,
+}
+
 # Clawd's documented on-frame size range, expressed as the side of the square
 # crop window in viewBox *units*. The torso is 11 units wide, so a 20-unit window
 # puts the torso at ~55% (largest allowed, cf. clawd-surrender-helpless) and a
@@ -58,6 +67,8 @@ class ExportOptions:
     timeout: float
     min_units: float
     max_units: float
+    resample: str = "lanczos"
+    colors: int = 255
 
 
 def parse_viewbox(svg_text: str) -> tuple[float, float, float, float] | None:
@@ -219,14 +230,17 @@ def prepare_gif_frames(
         options.max_units,
     )
     prepared: list[Image.Image] = []
+    resample = RESAMPLE_FILTERS[options.resample]
+    # Palette size; the last index is reserved for transparency.
+    colors = max(2, min(255, options.colors))
 
     for frame in frames:
-        cropped = frame.crop(bounds).resize((options.size, options.size), Image.Resampling.LANCZOS)
+        cropped = frame.crop(bounds).resize((options.size, options.size), resample)
 
         if options.background != "transparent":
             canvas = Image.new("RGBA", cropped.size, options.background)
             canvas.alpha_composite(cropped)
-            prepared.append(canvas.convert("RGB").convert("P", palette=Image.Palette.ADAPTIVE, colors=255))
+            prepared.append(canvas.convert("RGB").convert("P", palette=Image.Palette.ADAPTIVE, colors=colors))
             continue
 
         rgba = np.array(cropped, dtype=np.float32)
@@ -236,10 +250,10 @@ def prepare_gif_frames(
         binary_alpha = np.where(alpha > options.alpha_threshold, 255.0, 0.0)
         blended = np.concatenate([blended_rgb, binary_alpha], axis=-1).clip(0, 255).astype(np.uint8)
         image = Image.fromarray(blended).convert("RGBA")
-        palette_image = image.convert("RGB").convert("P", palette=Image.Palette.ADAPTIVE, colors=255)
+        palette_image = image.convert("RGB").convert("P", palette=Image.Palette.ADAPTIVE, colors=colors)
         mask = Image.eval(image.getchannel("A"), lambda value: 255 if value <= options.alpha_threshold else 0)
-        palette_image.paste(255, mask)
-        palette_image.info["transparency"] = 255
+        palette_image.paste(colors, mask)
+        palette_image.info["transparency"] = colors
         prepared.append(palette_image)
 
     return prepared
@@ -289,6 +303,18 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument("--alpha-threshold", type=int, default=128, help="Alpha cutoff for transparent GIF output.")
     parser.add_argument(
+        "--resample",
+        choices=sorted(RESAMPLE_FILTERS),
+        default="lanczos",
+        help="Downscale filter. 'nearest' keeps pixel edges crisp and shrinks the GIF ~25-30%%.",
+    )
+    parser.add_argument(
+        "--colors",
+        type=int,
+        default=255,
+        help="Palette size per frame (2-255). Fewer colors = smaller GIF; pixel art tolerates 64-128 well.",
+    )
+    parser.add_argument(
         "--background",
         choices=["transparent", "white"],
         default="transparent",
@@ -335,6 +361,8 @@ def main() -> None:
         timeout=args.timeout,
         min_units=max(0.0, args.min_units),
         max_units=args.max_units,
+        resample=args.resample,
+        colors=args.colors,
     )
 
     chrome = chrome_render.find_chrome()

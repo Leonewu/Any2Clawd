@@ -1,0 +1,22 @@
+# clawd-shelter-truck.svg
+
+Sheltering the little truck (呵护泥头车): it is raining, and Clawd holds a pink umbrella, tilted toward the truck, out over a cute yellow toy dump truck standing beside him — the umbrella covers the truck, not him, so raindrops bounce off the canopy and off his own head while he smiles ^^ and doesn't move. The truck (warm yellow, beacon lit, ^^ eyes, pink cheeks) looks up at him, and a small heart floats up from it. 4.8s loop, rain the whole time. Made to comfort someone who called herself "a bit like a dump truck": the truck is her, Clawd is the sender.
+
+## Body
+Standard torso 11x7 at (2,6), #DE886D, legs 1x2 planted at (3,13)/(5,13)/(9,13)/(11,13). The whole of Clawd sits in a `lean` group tilting rotate(2°↔3.5°) toward the truck about the feet at 4.8s; torso, face and arms sit inside a `breathe` group (2.4s scale(1,1)↔scale(1.015,0.985)). Happy ^^ polyline eyes (stroke #000000 0.8) at (3.5,9.5)→(4.5,8)→(5.5,9.5) / (9.5,9.5)→(10.5,8)→(11.5,9.5); cheeks #F8BBD0 1.5x0.6 at (2.6,10)/(10.9,10). Left arm 2x2 rests at (0,9); the right arm 2x2 (13,9) is raised translate(1.4px,-1.6px↔-1.9px) to grip the umbrella handle, swaying slightly with the breath.
+
+## Props
+- **Umbrella** (`umbrella` group, origin (15.5,8.5), rocking rotate(0↔-1.5°) translateY(0↔-0.3px) at 2.4s, wrapping a static `rotate(10, 15.5, 8.8)` that tilts the whole umbrella toward the truck): a #5D4037 0.35x7.2 shaft at x 15.35 from y 1.8 down to a 0.9x0.4 grip at (15.2,8.6) in Clawd's hand, a stepped dome canopy in #F48FB1 (rows 11x0.9 at (10,0.2), 9.2x0.9 at (10.9,-0.6), 6.8x0.8, 3.8x0.7, 1x0.6 up to y -2.4) with four #FCE4EC panels and a #5D4037 tip. After the tilt the canopy spans about x 11.6–22.4, so the whole truck (x 13.2–21) is covered with margin on both ends, while Clawd (x 2–13) stays mostly in the rain.
+- **Yellow toy dump truck** (`truck-bob` group bobbing translateY 0↔-0.25px at 1.2s, standing on the ground to the right, cab on the left facing Clawd): chassis (13.4,13.3) 7.4x0.6 #546E7A; three wheels r 0.7 #37474F with r 0.27 #B0BEC5 hubs at (14.6,14.05)/(18.4,14.05)/(20,14.05); bed (16.5,11.2) 4.4x2.3 rx 0.4 #FFC107 with a #FFE082 rim and a round dirt heap (#8D6E63 3.7x1.2 + #A1887F 2.3x0.9); cab (13.2,10.5) 3.2x3 rx 0.5 #FFC107 with a #FFF8E1 window (13.6,10.9) 2.4x1.5; in the window two tiny ^^ polylines (stroke #37474F 0.32) in a `truck-eyes` group shifted translate(-0.2px,-0.15px) to look up at Clawd, blinking scaleY(0.1) at 60%; #F8BBD0 0.5x0.25 cheeks; a lit beacon on the cab roof — #546E7A mount, #FF8F00 lamp at (15.55,9.5), #FFE082 glow 1.3x1 pulsing scale 1↔1.2 / opacity 0.55↔0.7 at 1.2s. Its own ground shadow (13.2,15) 7.8x0.8 opacity 0.28.
+- **Rain**: fifteen #90CAF9 0.32x1.3 rounded drops on 0.6s linear falls with staggered delays: five fall onto the tilted canopy (x 12.8 / 14.6 / 16.5 / 18.4 / 20.2, stopping at the canopy curve y -1.3 / -1.9 / -2.2 / -1.8 / -0.8), three onto Clawd's head (x 3.2 / 6.1 / 9.0, stopping at y 5.6), five to the ground on Clawd's side (x -1.8 to 11, stopping at y 14.6), and two drip off the umbrella rim (x 11.7 from y -0.4 onto Clawd, x 22.5 from y 1.5 to the ground beside the truck's rear). None reach the truck. Each drop ends in a two-pixel splash (`*-s` groups) that pops scale 0.3→1→1.4 and fades.
+- **Heart**: one #F48FB1 pixel heart (5 rects) at (12.2,7.6) between the truck's cab and Clawd, rising translate(-0.8px,-4.6px) with opacity 0→0.95→0 over 3–40% of the cycle, delayed 1.2s.
+- **Ground shadow**: (3,15) 9x1 #000000 opacity 0.5 under Clawd, breathing scaleX 1↔1.015.
+
+## Animation
+- **lean (4.8s)**, **breathe (2.4s)**, **shadow (2.4s)**, **arm-r (2.4s)**, **umbrella (2.4s)**.
+- **truck-bob (1.2s)**, **beacon-glow (1.2s)**, **truck-eyes (4.8s)**: blink at 60%.
+- **ru0–ru4 / rc0–rc2 / rg1–rg2 / rx1–rx3 / rd0–rd1 (0.6s, staggered)** raindrops with their `-s` splashes.
+- **heart (4.8s, delayed 1.2s)**.
+
+## Expression
+Rain is coming down, and Clawd stands with his right arm up, holding a pink umbrella tilted out over the yellow toy truck at his side — not over himself. Drops patter on the canopy and drip off its edge; drops land on his own head and splash, but he just stands there leaning toward the truck, eyes crinkled into ^^, cheeks pink, breathing slowly. Under the umbrella the little truck stays dry, its beacon glowing warm, its ^^ eyes turned up toward him, and every so often a small heart floats up from it.

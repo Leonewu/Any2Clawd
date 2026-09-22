@@ -1,0 +1,135 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45" width="500" height="500">
+  <defs>
+    <style>
+      /*
+        Blazing (angry, fire aura): 3s cycle. A small crown of fire floats 2.5 units
+        above Clawd's head and a flame burns on the ground at each side, 1.5
+        units clear of his arms; none of it touches him. Embers drift up and
+        every 1.5s the fire surges while Clawd puffs up with it.
+        Clawd: angry brows, tight squint, pulsing red flush, full-body tremble.
+      */
+      .tremble { transform-origin: 7.5px 15px; animation: tremble 0.1s infinite linear; }
+      .arm-l { animation: arm-tremble-l 0.1s infinite linear; }
+      .arm-r { animation: arm-tremble-r 0.1s infinite linear; }
+      .shadow-fury { transform-box: fill-box; transform-origin: 50% 50%; animation: tremble 0.1s infinite linear; }
+      @keyframes tremble {
+        0%   { transform: translate(0.15px, 0); }
+        25%  { transform: translate(-0.15px, 0.1px); }
+        50%  { transform: translate(0.1px, -0.1px); }
+        75%  { transform: translate(-0.1px, 0.05px); }
+        100% { transform: translate(0.15px, 0); }
+      }
+      @keyframes arm-tremble-l { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(-0.2px, 0.2px); } }
+      @keyframes arm-tremble-r { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(0.2px, -0.2px); } }
+      .flare-body { transform-origin: 7.5px 15px; animation: flare-body 1.5s infinite ease-out; }
+      .fire-surge { transform-origin: 7.5px 15px; animation: fire-surge 1.5s infinite ease-out; }
+      .t-center { transform-origin: 7.5px 3.5px; animation: flick-a 0.375s infinite ease-in-out; }
+      .t-left   { transform-origin: -3px 15px; animation: flick-b 0.5s infinite ease-in-out; }
+      .t-right  { transform-origin: 18px 15px; animation: flick-b 0.5s 0.2s infinite ease-in-out; }
+      .flush { animation: flush 0.5s infinite ease-in-out; }
+      .eyes-fury { transform-box: fill-box; transform-origin: 50% 50%; animation: eyes-fury 3s infinite ease-in-out; }
+      @keyframes flare-body {
+        0%, 100% { transform: scale(1, 1); }
+        6%       { transform: scale(1.06, 0.95); }
+        14%      { transform: scale(0.98, 1.06); }
+        24%      { transform: scale(1, 1); }
+      }
+      @keyframes fire-surge {
+        0%, 100% { transform: scale(1, 1); }
+        8%       { transform: scale(1.04, 1.12); }
+        18%      { transform: scale(0.98, 1.02); }
+        28%      { transform: scale(1, 1); }
+      }
+      @keyframes flick-a { 0%, 100% { transform: scale(1, 1) translateX(0); } 50% { transform: scale(1.05, 1.06) translateX(0.3px); } }
+      @keyframes flick-b { 0%, 100% { transform: scale(1, 1.04) translateX(-0.2px); } 50% { transform: scale(0.96, 0.94) translateX(0.2px); } }
+      @keyframes flick-c { 0%, 100% { transform: scale(1, 1); } 50% { transform: scale(1.1, 0.88); } }
+      @keyframes flush { 0%, 100% { opacity: 0.2; } 50% { opacity: 0.42; } }
+      @keyframes eyes-fury {
+        0%, 40%   { transform: scaleY(0.6); }
+        42%       { transform: scaleY(0.05); }
+        44%, 100% { transform: scaleY(0.6); }
+      }
+      .ember-1 { transform-box: fill-box; transform-origin: 50% 50%; animation: ember-1 1.0s 0s infinite ease-out; }
+      @keyframes ember-1 { 0% { transform: translate(0, 0) scale(1); opacity: 0; } 15% { opacity: 0.95; } 100% { transform: translate(-0.4px, -2.5px) scale(0.4); opacity: 0; } }
+      .ember-2 { transform-box: fill-box; transform-origin: 50% 50%; animation: ember-2 0.75s 0.3s infinite ease-out; }
+      @keyframes ember-2 { 0% { transform: translate(0, 0) scale(1); opacity: 0; } 15% { opacity: 0.95; } 100% { transform: translate(-0.5px, -2.2px) scale(0.4); opacity: 0; } }
+      .ember-3 { transform-box: fill-box; transform-origin: 50% 50%; animation: ember-3 1.0s 0.5s infinite ease-out; }
+      @keyframes ember-3 { 0% { transform: translate(0, 0) scale(1); opacity: 0; } 15% { opacity: 0.95; } 100% { transform: translate(0.4px, -2.2px) scale(0.4); opacity: 0; } }
+      .ember-4 { transform-box: fill-box; transform-origin: 50% 50%; animation: ember-4 0.75s 0.1s infinite ease-out; }
+      @keyframes ember-4 { 0% { transform: translate(0, 0) scale(1); opacity: 0; } 15% { opacity: 0.95; } 100% { transform: translate(0.4px, -2.5px) scale(0.4); opacity: 0; } }
+      .ember-5 { transform-box: fill-box; transform-origin: 50% 50%; animation: ember-5 0.75s 0.6s infinite ease-out; }
+      @keyframes ember-5 { 0% { transform: translate(0, 0) scale(1); opacity: 0; } 15% { opacity: 0.95; } 100% { transform: translate(-0.2px, -2px) scale(0.4); opacity: 0; } }
+    </style>
+  </defs>
+
+  <rect class="shadow-fury" x="3" y="15" width="9" height="1" fill="#000000" opacity="0.5"/>
+
+  <!-- Fire crown above the head + a flame on the ground at each side (surges every 1.5s; each flickers on its own) -->
+  <g class="fire-surge">
+      <g transform="translate(-3, 15) scale(0.55) translate(3, -15)">
+      <g class="t-left">
+        <rect x="-4.5" y="11.5" width="3" height="3.5" fill="#FF3D00"/>
+        <rect x="-4" y="9" width="2" height="2.5" fill="#FF3D00"/>
+        <rect x="-3.5" y="7.5" width="1" height="1.5" fill="#FF3D00"/>
+        <rect x="-4" y="12.5" width="2" height="2.5" fill="#FF9100"/>
+        <rect x="-3.5" y="10.5" width="1" height="2" fill="#FF9100"/>
+        <rect x="-3.5" y="13" width="1" height="2" fill="#FFD54F"/>
+      </g>
+      </g>
+      <g transform="translate(18, 15) scale(0.55) translate(-18, -15)">
+      <g class="t-right">
+        <rect x="16.5" y="11.5" width="3" height="3.5" fill="#FF3D00"/>
+        <rect x="17" y="9" width="2" height="2.5" fill="#FF3D00"/>
+        <rect x="17.5" y="7.5" width="1" height="1.5" fill="#FF3D00"/>
+        <rect x="17" y="12.5" width="2" height="2.5" fill="#FF9100"/>
+        <rect x="17.5" y="10.5" width="1" height="2" fill="#FF9100"/>
+        <rect x="17.5" y="13" width="1" height="2" fill="#FFD54F"/>
+      </g>
+      </g>
+      <g transform="translate(7.5, 3.5) scale(0.55) translate(-7.5, -3.5)">
+      <g class="t-center">
+        <rect x="4.5" y="0.5" width="6" height="3" fill="#FF3D00"/>
+        <rect x="5" y="-1.3" width="5" height="1.8" fill="#FF3D00"/>
+        <rect x="5.5" y="-2.5" width="4" height="1.2" fill="#FF3D00"/>
+        <rect x="5.5" y="1" width="4" height="2.5" fill="#FF9100"/>
+        <rect x="6" y="-0.5" width="3" height="1.5" fill="#FF9100"/>
+        <rect x="6.5" y="-1.5" width="2" height="1" fill="#FF9100"/>
+        <rect x="6.5" y="1.5" width="2" height="2" fill="#FFD54F"/>
+        <rect x="7" y="0.2" width="1" height="1.3" fill="#FFD54F"/>
+      </g>
+      </g>
+  </g>
+
+  <!-- Clawd -->
+  <g class="tremble">
+    <g class="flare-body">
+      <g fill="#DE886D">
+        <rect x="3" y="13" width="1" height="2"/>
+        <rect x="5" y="13" width="1" height="2"/>
+        <rect x="9" y="13" width="1" height="2"/>
+        <rect x="11" y="13" width="1" height="2"/>
+      </g>
+      <rect x="2" y="6" width="11" height="7" fill="#DE886D"/>
+      <rect class="flush" x="2" y="6" width="11" height="7" fill="#D32F2F" opacity="0.3"/>
+      <g fill="#000000">
+        <rect x="3.5" y="6.9" width="1.9" height="0.55" transform="rotate(22, 4.45, 7.17)"/>
+        <rect x="9.6" y="6.9" width="1.9" height="0.55" transform="rotate(-22, 10.55, 7.17)"/>
+      </g>
+      <g class="eyes-fury" fill="#000000">
+        <rect x="4" y="8" width="1" height="2"/>
+        <rect x="10" y="8" width="1" height="2"/>
+      </g>
+      <g class="arm-l"><rect x="0" y="9" width="2" height="2" fill="#DE886D"/></g>
+      <g class="arm-r"><rect x="13" y="9" width="2" height="2" fill="#DE886D"/></g>
+    </g>
+  </g>
+
+  <!-- Embers -->
+  <g>
+    <rect class="ember-1" x="-3.2" y="10.8" width="0.5" height="0.5" fill="#FFD54F" opacity="0"/>
+    <rect class="ember-2" x="6.4" y="0.3" width="0.5" height="0.5" fill="#FF9100" opacity="0"/>
+    <rect class="ember-3" x="8.3" y="0" width="0.5" height="0.5" fill="#FFEB3B" opacity="0"/>
+    <rect class="ember-4" x="17.7" y="10.8" width="0.5" height="0.5" fill="#FFD54F" opacity="0"/>
+    <rect class="ember-5" x="7.3" y="1" width="0.4" height="0.4" fill="#FFEB3B" opacity="0"/>
+  </g>
+</svg>

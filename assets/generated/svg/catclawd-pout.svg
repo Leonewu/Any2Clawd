@@ -1,0 +1,189 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45" width="500" height="500">
+  <defs>
+    <style>
+      /*
+        Catclawd pout (气鼓鼓): 4s cycle. Cat-form Clawd in a cute huff: cheeks
+        puffed (body a little wider), arms folded in front, ears flattened back,
+        squeezed chevron eyes, deep blush, a tiny grey cloud bobbing over his head.
+        He turns his face away to one side with a "hmph" puff, stomps once as he
+        turns back to glare, then turns away to the other side; the tail slaps
+        the ground the whole time.
+      */
+      .huff { transform-origin: 7.5px 15px; animation: huff 4s infinite ease-in-out; }
+      .puff-body { transform-origin: 7.5px 15px; animation: puff-body 4s infinite ease-in-out; }
+      .eyes-pout { animation: eyes-look 4s infinite ease-in-out; }
+      .tail { transform-origin: 13.6px 12.2px; animation: tail-slap 0.5s infinite ease-in; }
+      .ear-l { transform-origin: 3.2px 6px; animation: ear-l 4s infinite ease-in-out; }
+      .ear-r { transform-origin: 11.8px 6px; animation: ear-r 4s infinite ease-in-out; }
+      .arm-fold-l { animation: arm-fold-l 4s infinite ease-in-out; }
+      .arm-fold-r { animation: arm-fold-r 4s infinite ease-in-out; }
+      .cloud { animation: cloud-bob 1s infinite ease-in-out; }
+      .hmph-l { animation: hmph-l 4s infinite ease-out; }
+      .hmph-r { animation: hmph-r 4s infinite ease-out; }
+      .stomp { animation: stomp 4s infinite ease-out; }
+      .slap-dust { transform-box: fill-box; transform-origin: 50% 50%; animation: slap-dust 0.5s infinite ease-out; }
+      .shadow-pout { transform-box: fill-box; transform-origin: 50% 50%; animation: shadow-pout 4s infinite ease-in-out; }
+
+      /* whole cat: turn away left, stomp back to centre, turn away right */
+      @keyframes huff {
+        0%, 12%   { transform: translateX(0); }
+        20%, 42%  { transform: translateX(-1.5px); }
+        48%       { transform: translateX(0.3px); }
+        52%, 60%  { transform: translateX(0); }
+        68%, 88%  { transform: translateX(1.5px); }
+        96%, 100% { transform: translateX(0); }
+      }
+      /* puffed cheeks: wider body, extra puff on each hmph and on the stomp */
+      @keyframes puff-body {
+        0%, 100%  { transform: scale(1.08, 0.96); }
+        18%       { transform: scale(1.14, 0.93); }
+        26%       { transform: scale(1.08, 0.96); }
+        46%       { transform: scale(1.06, 0.98); }
+        49%       { transform: scale(1.16, 0.9); }
+        54%       { transform: scale(1.08, 0.96); }
+        66%       { transform: scale(1.14, 0.93); }
+        74%       { transform: scale(1.08, 0.96); }
+      }
+      /* eyes look away with the turn */
+      @keyframes eyes-look {
+        0%, 12%   { transform: translateX(0); }
+        20%, 42%  { transform: translateX(-2.2px); }
+        50%, 60%  { transform: translateX(0); }
+        68%, 88%  { transform: translateX(2.2px); }
+        96%, 100% { transform: translateX(0); }
+      }
+      @keyframes tail-slap {
+        0%   { transform: rotate(0deg); }
+        55%  { transform: rotate(52deg); }
+        70%  { transform: rotate(46deg); }
+        100% { transform: rotate(0deg); }
+      }
+      @keyframes ear-l {
+        0%, 100% { transform: rotate(-30deg); }
+        18%      { transform: rotate(-40deg); }
+        49%      { transform: rotate(-14deg); }
+        53%      { transform: rotate(-34deg); }
+        66%      { transform: rotate(-40deg); }
+      }
+      @keyframes ear-r {
+        0%, 100% { transform: rotate(30deg); }
+        18%      { transform: rotate(40deg); }
+        49%      { transform: rotate(14deg); }
+        53%      { transform: rotate(34deg); }
+        66%      { transform: rotate(40deg); }
+      }
+      /* arms folded in front of the chest, squeezing tighter on each hmph */
+      @keyframes arm-fold-l {
+        0%, 100% { transform: translate(4.6px, 1px); }
+        18%      { transform: translate(5px, 1px); }
+        66%      { transform: translate(5px, 1px); }
+      }
+      @keyframes arm-fold-r {
+        0%, 100% { transform: translate(-4.6px, 1px); }
+        18%      { transform: translate(-5px, 1px); }
+        66%      { transform: translate(-5px, 1px); }
+      }
+      @keyframes cloud-bob {
+        0%, 100% { transform: translateY(0); }
+        50%      { transform: translateY(-0.4px); }
+      }
+      /* "hmph" air puffs from the cheek that faces away */
+      @keyframes hmph-l {
+        0%, 16%  { transform: translate(0, 0) scale(0.5); opacity: 0; }
+        20%      { transform: translate(-0.5px, -0.3px) scale(1); opacity: 0.9; }
+        30%      { transform: translate(-2.4px, -1.2px) scale(1.4); opacity: 0; }
+        100%     { transform: translate(-2.4px, -1.2px) scale(1.4); opacity: 0; }
+      }
+      @keyframes hmph-r {
+        0%, 64%  { transform: translate(0, 0) scale(0.5); opacity: 0; }
+        68%      { transform: translate(0.5px, -0.3px) scale(1); opacity: 0.9; }
+        78%      { transform: translate(2.4px, -1.2px) scale(1.4); opacity: 0; }
+        100%     { transform: translate(2.4px, -1.2px) scale(1.4); opacity: 0; }
+      }
+      /* one stomp with the right legs when turning back to centre */
+      @keyframes stomp {
+        0%, 42%   { transform: translateY(0); }
+        45%       { transform: translateY(-1.4px); }
+        49%       { transform: translateY(0); }
+        100%      { transform: translateY(0); }
+      }
+      @keyframes slap-dust {
+        0%, 50%  { transform: translate(0, 0) scale(0.5); opacity: 0; }
+        58%      { transform: translate(0.3px, -0.4px) scale(1); opacity: 0.85; }
+        95%, 100% { transform: translate(1px, -1.2px) scale(1.3); opacity: 0; }
+      }
+      @keyframes shadow-pout {
+        0%, 12%   { transform: translateX(0) scaleX(1.06); opacity: 0.5; }
+        20%, 42%  { transform: translateX(-1.5px) scaleX(1.06); opacity: 0.5; }
+        49%       { transform: translateX(0) scaleX(1.14); opacity: 0.55; }
+        54%, 60%  { transform: translateX(0) scaleX(1.06); opacity: 0.5; }
+        68%, 88%  { transform: translateX(1.5px) scaleX(1.06); opacity: 0.5; }
+        96%, 100% { transform: translateX(0) scaleX(1.06); opacity: 0.5; }
+      }
+    </style>
+  </defs>
+
+  <rect class="shadow-pout" x="3" y="15" width="9" height="1" fill="#000000" opacity="0.5"/>
+
+  <!-- Cat-form Clawd in a huff -->
+  <g class="huff">
+      <!-- tail: curls up from the lower right of the torso, sways about its root (13.6,12.2) -->
+      <g class="tail">
+        <g fill="#DE886D">
+          <rect x="13" y="11.6" width="1.3" height="1.2"/><rect x="14" y="10.6" width="1.2" height="1.4"/>
+          <rect x="14.6" y="9.2" width="1.1" height="1.7"/><rect x="14.5" y="7.8" width="1.1" height="1.6"/><rect x="13.9" y="6.8" width="1.2" height="1.2"/>
+        </g>
+      </g>
+    <!-- dust where the tail slaps the ground -->
+    <g fill="#BDBDBD">
+      <rect class="slap-dust" x="16.2" y="14.2" width="0.8" height="0.8"/>
+    </g>
+    <!-- legs: right pair stomps once -->
+    <g fill="#DE886D">
+      <rect x="3" y="13" width="1" height="2"/><rect x="5" y="13" width="1" height="2"/>
+      <g class="stomp"><rect x="9" y="13" width="1" height="2"/><rect x="11" y="13" width="1" height="2"/></g>
+    </g>
+    <g class="puff-body">
+      <rect x="2" y="6" width="11" height="7" fill="#DE886D"/>
+      <rect x="2.6" y="10.2" width="1.8" height="0.8" fill="#F48FB1" opacity="0.9"/>
+      <rect x="10.6" y="10.2" width="1.8" height="0.8" fill="#F48FB1" opacity="0.9"/>
+      <rect x="7.2" y="10.3" width="0.6" height="0.45" fill="#F8BBD0"/>
+      <g stroke="#000000" stroke-width="0.3" stroke-linecap="round">
+        <line x1="2" y1="8.2" x2="-0.6" y2="7.7"/><line x1="2" y1="8.9" x2="-0.6" y2="9"/>
+        <line x1="13" y1="8.2" x2="15.6" y2="7.7"/><line x1="13" y1="8.9" x2="15.6" y2="9"/>
+      </g>
+      <g class="eyes-pout" fill="none" stroke="#000000" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="3.6,8.1 5.2,9 3.6,9.9"/><polyline points="11.4,8.1 9.8,9 11.4,9.9"/>
+      </g>
+      <!-- ears: stair-step triangles on the top corners; each rotates about its base -->
+      <g class="ear-l">
+        <g fill="#DE886D"><rect x="2" y="5" width="2.5" height="1"/><rect x="2" y="4" width="1.5" height="1"/><rect x="2" y="3.2" width="0.7" height="0.8"/></g>
+        <rect x="2.4" y="4.6" width="0.7" height="0.8" fill="#F8BBD0"/>
+      </g>
+      <g class="ear-r">
+        <g fill="#DE886D"><rect x="10.5" y="5" width="2.5" height="1"/><rect x="11.5" y="4" width="1.5" height="1"/><rect x="12.3" y="3.2" width="0.7" height="0.8"/></g>
+        <rect x="11.9" y="4.6" width="0.7" height="0.8" fill="#F8BBD0"/>
+      </g>
+      <!-- arms folded in front of the chest (with drop shadows for readability) -->
+      <g class="arm-fold-l">
+        <rect x="0.5" y="9.5" width="2" height="2" fill="#000000" opacity="0.22"/>
+        <rect x="0" y="9" width="2" height="2" fill="#DE886D"/>
+      </g>
+      <g class="arm-fold-r">
+        <rect x="13.5" y="9.5" width="2" height="2" fill="#000000" opacity="0.22"/>
+        <rect x="13" y="9" width="2" height="2" fill="#DE886D"/>
+      </g>
+      <!-- "hmph" puffs at the cheeks -->
+      <g fill="#CFD8DC">
+        <rect class="hmph-l" x="0.6" y="9.6" width="1" height="0.9" rx="0.45" opacity="0"/>
+        <rect class="hmph-r" x="13.4" y="9.6" width="1" height="0.9" rx="0.45" opacity="0"/>
+      </g>
+      <!-- tiny grey cloud over the head -->
+      <g class="cloud" fill="#90A4AE">
+        <rect x="9.6" y="1.4" width="3.2" height="1.2" rx="0.5"/>
+        <rect x="10.2" y="0.7" width="1.5" height="1" rx="0.5"/>
+        <rect x="11.4" y="0.9" width="1.1" height="0.9" rx="0.45"/>
+      </g>
+    </g>
+  </g>
+</svg>

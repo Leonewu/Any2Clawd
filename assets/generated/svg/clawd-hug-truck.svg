@@ -1,0 +1,272 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45" width="500" height="500">
+  <defs>
+    <style>
+      /*
+        Hug the little dump truck (抱抱泥头车): 5s cycle. A cute toy-sized dump
+        truck - light blue, rounded, a small face in its cab window, a grey
+        beacon, a round heap of dirt - is being held by Clawd. At first it is
+        held out a little and its face is down (八-brows, drooping eyes) while
+        Clawd looks at it with plain eyes; he pulls it in to his chest, rocks
+        it, squeezes twice and pats its back; the truck blinks and comes up
+        smiling ^^ with pink cheeks, its beacon warms to yellow, Clawd's eyes
+        go ^^ and his cheeks blush, and two small hearts drift up. Both blink
+        at the loop seam so the reset is hidden.
+        0-22%  held out, sad   | 22-30% pulled in | 43-45% Clawd smiles
+        45%/55% squeezes       | 47-49% truck blinks -> smiles, beacon warms
+        65-80% pats            | 96-100% both blink (seam)
+      */
+
+      .sway { transform-origin: 7.5px 15px; animation: sway 2.5s infinite ease-in-out; }
+      .body { transform-origin: 7.5px 15px; animation: body 5s infinite ease-in-out; }
+      .arm-l { animation: arm-l 5s infinite ease-in-out; }
+      .arm-r { animation: arm-r 5s infinite ease-in-out; }
+      .truck { transform-origin: 7.5px 14px; animation: truck 5s infinite ease-in-out; }
+      .eyes-plain { transform-box: fill-box; transform-origin: 50% 50%; animation: eyes-plain 5s infinite ease-in-out; }
+      .eyes-happy { transform-box: fill-box; transform-origin: 50% 50%; animation: eyes-happy 5s infinite ease-in-out; }
+      .cheeks-big { animation: cheeks-big 5s infinite ease-in-out; }
+      .tf-sad { transform-box: fill-box; transform-origin: 50% 50%; animation: tf-sad 5s infinite ease-in-out; }
+      .tf-happy { transform-box: fill-box; transform-origin: 50% 50%; animation: tf-happy 5s infinite ease-in-out; }
+      .tf-cheeks { animation: tf-cheeks 5s infinite ease-in-out; }
+      .beacon-grey { animation: beacon-grey 5s infinite step-end; }
+      .beacon-warm { animation: beacon-warm 5s infinite step-end; }
+      .beacon-glow { transform-box: fill-box; transform-origin: 50% 50%; animation: beacon-glow 5s infinite ease-in-out; }
+      .heart-1 { transform-box: fill-box; transform-origin: 50% 50%; animation: heart 5s 3s infinite ease-out; }
+      .heart-2 { transform-box: fill-box; transform-origin: 50% 50%; animation: heart 5s 4s infinite ease-out; }
+      .shadow-hug { transform-box: fill-box; transform-origin: 50% 50%; animation: shadow 2.5s infinite ease-in-out; }
+
+      /* --- Keyframes --- */
+
+      @keyframes sway {
+        0%, 100% { transform: rotate(-2.5deg); }
+        50%      { transform: rotate(2.5deg); }
+      }
+
+      @keyframes body {
+        0%, 43%   { transform: scale(1, 1); }
+        46%       { transform: scale(1.04, 0.97); }
+        50%       { transform: scale(1, 1); }
+        53%       { transform: scale(1, 1); }
+        56%       { transform: scale(1.05, 0.965); }
+        60%, 100% { transform: scale(1, 1); }
+      }
+
+      /* truck: held out a little lower at first, then pulled in; squashes on the squeezes, dips on the pats */
+      @keyframes truck {
+        0%, 22%   { transform: translateY(0.9px) scale(1, 1); }
+        30%       { transform: translateY(0) scale(1, 1); }
+        43%       { transform: translateY(0) scale(1, 1); }
+        46%       { transform: translateY(-0.4px) scale(0.96, 1.04); }
+        50%       { transform: translateY(0) scale(1, 1); }
+        53%       { transform: translateY(0) scale(1, 1); }
+        56%       { transform: translateY(-0.5px) scale(0.95, 1.05); }
+        60%, 64%  { transform: translateY(0) scale(1, 1); }
+        68%       { transform: translateY(0.2px) scale(1.02, 0.98); }
+        72%       { transform: translateY(0) scale(1, 1); }
+        76%       { transform: translateY(0.2px) scale(1.02, 0.98); }
+        80%, 100% { transform: translateY(0) scale(1, 1); }
+      }
+
+      /* arms: holding out (lower), then wrapped tighter; the right arm pats twice */
+      @keyframes arm-l {
+        0%, 22%   { transform: translate(4px, 4.2px); }
+        30%, 43%  { transform: translate(4.5px, 3.4px); }
+        46%       { transform: translate(5.1px, 3.4px); }
+        50%       { transform: translate(4.5px, 3.4px); }
+        53%       { transform: translate(4.5px, 3.4px); }
+        56%       { transform: translate(5.2px, 3.4px); }
+        60%, 100% { transform: translate(4.5px, 3.4px); }
+      }
+      @keyframes arm-r {
+        0%, 22%   { transform: translate(-4px, 4.2px); }
+        30%, 43%  { transform: translate(-4.5px, 3.4px); }
+        46%       { transform: translate(-5.1px, 3.4px); }
+        50%       { transform: translate(-4.5px, 3.4px); }
+        53%       { transform: translate(-4.5px, 3.4px); }
+        56%       { transform: translate(-5.2px, 3.4px); }
+        60%, 64%  { transform: translate(-4.5px, 3.4px); }
+        68%       { transform: translate(-4.3px, 2.6px); }
+        72%       { transform: translate(-4.5px, 3.4px); }
+        76%       { transform: translate(-4.3px, 2.6px); }
+        80%, 100% { transform: translate(-4.5px, 3.4px); }
+      }
+
+      /* Clawd's eyes: plain bars (looking down at the truck) until 43%, ^^ afterwards; blinks hide both switches */
+      @keyframes eyes-plain {
+        0%, 18%     { transform: translateY(0.5px) scaleY(1); opacity: 1; }
+        19.5%       { transform: translateY(0.5px) scaleY(0.05); opacity: 1; }
+        21%, 41%    { transform: translateY(0.5px) scaleY(1); opacity: 1; }
+        43%         { transform: translateY(0.5px) scaleY(0.05); opacity: 1; }
+        43.5%       { transform: translateY(0.5px) scaleY(0.05); opacity: 0; }
+        96%         { transform: translateY(0.5px) scaleY(0.05); opacity: 0; }
+        96.5%       { transform: translateY(0.5px) scaleY(0.05); opacity: 1; }
+        98.5%, 100% { transform: translateY(0.5px) scaleY(1); opacity: 1; }
+      }
+      @keyframes eyes-happy {
+        0%, 43.5%   { transform: scaleY(0.05); opacity: 0; }
+        44%         { transform: scaleY(0.05); opacity: 1; }
+        46%         { transform: scaleY(0.7); opacity: 1; }
+        50%         { transform: scaleY(1); opacity: 1; }
+        53%         { transform: scaleY(1); opacity: 1; }
+        56%         { transform: scaleY(0.7); opacity: 1; }
+        60%, 94%    { transform: scaleY(1); opacity: 1; }
+        96%         { transform: scaleY(0.05); opacity: 1; }
+        96.5%, 100% { transform: scaleY(0.05); opacity: 0; }
+      }
+      @keyframes cheeks-big {
+        0%, 43%   { opacity: 0; }
+        47%, 95%  { opacity: 0.9; }
+        98%, 100% { opacity: 0; }
+      }
+
+      /* truck face: sad until 47%, blink, then happy ^^; blink at the seam */
+      @keyframes tf-sad {
+        0%, 45%     { transform: scaleY(1); opacity: 1; }
+        47%         { transform: scaleY(0.05); opacity: 1; }
+        47.5%       { transform: scaleY(0.05); opacity: 0; }
+        96%         { transform: scaleY(0.05); opacity: 0; }
+        96.5%       { transform: scaleY(0.05); opacity: 1; }
+        98.5%, 100% { transform: scaleY(1); opacity: 1; }
+      }
+      @keyframes tf-happy {
+        0%, 47.5%   { transform: scaleY(0.05); opacity: 0; }
+        48%         { transform: scaleY(0.05); opacity: 1; }
+        50%, 94%    { transform: scaleY(1); opacity: 1; }
+        96%         { transform: scaleY(0.05); opacity: 1; }
+        96.5%, 100% { transform: scaleY(0.05); opacity: 0; }
+      }
+      @keyframes tf-cheeks {
+        0%, 47%   { opacity: 0; }
+        51%, 95%  { opacity: 0.95; }
+        98%, 100% { opacity: 0; }
+      }
+      @keyframes beacon-grey {
+        0%   { opacity: 1; }
+        49%  { opacity: 0; }
+        97%  { opacity: 1; }
+        100% { opacity: 1; }
+      }
+      @keyframes beacon-warm {
+        0%   { opacity: 0; }
+        49%  { opacity: 1; }
+        97%  { opacity: 0; }
+        100% { opacity: 0; }
+      }
+      @keyframes beacon-glow {
+        0%, 49%   { transform: scale(0.4); opacity: 0; }
+        52%       { transform: scale(1.3); opacity: 0.7; }
+        56%       { transform: scale(1); opacity: 0.5; }
+        70%       { transform: scale(1.15); opacity: 0.6; }
+        84%       { transform: scale(1); opacity: 0.5; }
+        95%       { transform: scale(1.1); opacity: 0.55; }
+        97%, 100% { transform: scale(0.4); opacity: 0; }
+      }
+
+      @keyframes heart {
+        0%, 3%   { transform: translate(0, 0) scale(0.6); opacity: 0; }
+        9%       { transform: translate(0, -0.8px) scale(1); opacity: 0.95; }
+        30%      { transform: translate(0.6px, -4px) scale(1); opacity: 0.9; }
+        38%      { transform: translate(0.8px, -5.2px) scale(1.1); opacity: 0; }
+        100%     { transform: translate(0.8px, -5.2px) scale(1.1); opacity: 0; }
+      }
+
+      @keyframes shadow {
+        0%, 100% { transform: translateX(-0.35px); opacity: 0.5; }
+        50%      { transform: translateX(0.35px); opacity: 0.5; }
+      }
+    </style>
+  </defs>
+
+  <!-- Ground Shadow -->
+  <rect class="shadow-hug" x="3" y="15" width="9" height="1" fill="#000000" opacity="0.5"/>
+
+  <g class="sway">
+    <!-- Legs (planted) -->
+    <g fill="#DE886D">
+      <rect x="3" y="13" width="1" height="2"/>
+      <rect x="5" y="13" width="1" height="2"/>
+      <rect x="9" y="13" width="1" height="2"/>
+      <rect x="11" y="13" width="1" height="2"/>
+    </g>
+
+    <g class="body">
+      <rect x="2" y="6" width="11" height="7" fill="#DE886D"/>
+
+      <!-- Clawd's cheeks (appear when he smiles) -->
+      <g class="cheeks-big" opacity="0">
+        <rect x="2.6" y="10" width="1.5" height="0.6" fill="#F8BBD0"/>
+        <rect x="10.9" y="10" width="1.5" height="0.6" fill="#F8BBD0"/>
+      </g>
+
+      <!-- Clawd's eyes: plain (looking down at the truck) -> ^^ -->
+      <g class="eyes-plain" fill="#000000">
+        <rect x="4" y="8" width="1" height="2"/>
+        <rect x="10" y="8" width="1" height="2"/>
+      </g>
+      <g class="eyes-happy" fill="none" stroke="#000000" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round" opacity="0">
+        <polyline points="3.5,9.5 4.5,8 5.5,9.5"/>
+        <polyline points="9.5,9.5 10.5,8 11.5,9.5"/>
+      </g>
+
+      <!-- === Cute toy dump truck held across the chest (side view, cab on the left) === -->
+      <g class="truck">
+        <!-- wheels + chassis -->
+        <rect x="3.7" y="13.2" width="7.8" height="0.6" rx="0.2" fill="#546E7A"/>
+        <g fill="#37474F">
+          <circle cx="4.8" cy="13.95" r="0.65"/><circle cx="8.9" cy="13.95" r="0.65"/><circle cx="10.6" cy="13.95" r="0.65"/>
+        </g>
+        <g fill="#B0BEC5">
+          <circle cx="4.8" cy="13.95" r="0.25"/><circle cx="8.9" cy="13.95" r="0.25"/><circle cx="10.6" cy="13.95" r="0.25"/>
+        </g>
+        <!-- dirt heap (round) + bed -->
+        <rect x="7.3" y="10.5" width="3.8" height="1.2" rx="0.6" fill="#8D6E63"/>
+        <rect x="7.9" y="9.95" width="2.4" height="0.9" rx="0.45" fill="#A1887F"/>
+        <rect x="6.9" y="11.3" width="4.6" height="2.2" rx="0.4" fill="#64B5F6"/>
+        <rect x="6.8" y="11.1" width="4.8" height="0.4" rx="0.2" fill="#90CAF9"/>
+        <!-- cab with the face in the window -->
+        <rect x="3.5" y="10.6" width="3.2" height="2.9" rx="0.5" fill="#64B5F6"/>
+        <rect x="3.9" y="11" width="2.4" height="1.5" rx="0.3" fill="#E3F2FD"/>
+        <!-- sad face: drooping eyes + 八 brows -->
+        <g class="tf-sad" fill="#37474F">
+          <rect x="4.25" y="11.55" width="0.45" height="0.55"/>
+          <rect x="5.5" y="11.55" width="0.45" height="0.55"/>
+          <rect x="4.1" y="11.15" width="0.7" height="0.2" transform="rotate(-22, 4.45, 11.25)"/>
+          <rect x="5.4" y="11.15" width="0.7" height="0.2" transform="rotate(22, 5.75, 11.25)"/>
+        </g>
+        <!-- happy face: ^^ -->
+        <g class="tf-happy" fill="none" stroke="#37474F" stroke-width="0.32" stroke-linecap="round" stroke-linejoin="round" opacity="0">
+          <polyline points="4.05,12.05 4.5,11.5 4.95,12.05"/>
+          <polyline points="5.3,12.05 5.75,11.5 6.2,12.05"/>
+        </g>
+        <g class="tf-cheeks" fill="#F8BBD0" opacity="0">
+          <rect x="3.95" y="12.15" width="0.5" height="0.25"/>
+          <rect x="5.8" y="12.15" width="0.5" height="0.25"/>
+        </g>
+        <!-- beacon: grey at first, warm yellow once hugged -->
+        <rect x="5.7" y="10.15" width="0.9" height="0.45" fill="#546E7A"/>
+        <rect class="beacon-glow" x="5.5" y="9.4" width="1.3" height="1" rx="0.4" fill="#FFE082" opacity="0"/>
+        <rect class="beacon-grey" x="5.85" y="9.65" width="0.6" height="0.55" rx="0.15" fill="#B0BEC5"/>
+        <rect class="beacon-warm" x="5.85" y="9.65" width="0.6" height="0.55" rx="0.15" fill="#FFC107" opacity="0"/>
+      </g>
+
+      <!-- Clawd's arms wrapped round the truck (drawn over it) -->
+      <g class="arm-l">
+        <rect x="0" y="9" width="2" height="2" fill="#DE886D" stroke="#B85C42" stroke-width="0.3" stroke-linejoin="round"/>
+      </g>
+      <g class="arm-r">
+        <rect x="13" y="9" width="2" height="2" fill="#DE886D" stroke="#B85C42" stroke-width="0.3" stroke-linejoin="round"/>
+      </g>
+    </g>
+  </g>
+
+  <!-- Hearts -->
+  <g fill="#F48FB1">
+    <g class="heart-1" opacity="0">
+      <rect x="11.6" y="6.2" width="0.5" height="0.5"/><rect x="12.4" y="6.2" width="0.5" height="0.5"/>
+      <rect x="11.4" y="6.7" width="1.7" height="0.5"/><rect x="11.8" y="7.2" width="0.9" height="0.5"/><rect x="12.1" y="7.7" width="0.3" height="0.3"/>
+    </g>
+    <g class="heart-2" opacity="0">
+      <rect x="1.6" y="6.8" width="0.5" height="0.5"/><rect x="2.4" y="6.8" width="0.5" height="0.5"/>
+      <rect x="1.4" y="7.3" width="1.7" height="0.5"/><rect x="1.8" y="7.8" width="0.9" height="0.5"/><rect x="2.1" y="8.3" width="0.3" height="0.3"/>
+    </g>
+  </g>
+</svg>

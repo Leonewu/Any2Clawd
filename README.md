@@ -119,6 +119,8 @@ lot of trial and error during my WeChat sticker work to get here — the current
 version should play nicely with WeChat.)
 
 Some clients render transparent GIFs poorly; add `--background white` for those.
+
+If a GIF comes out too large (WeChat caps stickers at 500 KB), add `--resample nearest`: it downscales with nearest-neighbour, which keeps pixel edges crisp and typically shrinks the file by 25–30%. `--colors 128` trims a bit more.
 Rendering runs a hard-timed Chrome per frame, so it can never stall — use
 `--workers 1` for the serial safe baseline if you ever need it.
 

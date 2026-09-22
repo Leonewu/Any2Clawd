@@ -1,0 +1,329 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45" width="500" height="500">
+  <defs>
+    <style>
+      /*
+        Snake bump (impatience level 1): 6s cycle, Snake-game grid movement.
+        Clawd moves on a 2-unit grid with step-end (hard cuts, like the game),
+        zig-zagging down: right 4 steps -> bump the invisible right edge ->
+        down 2 -> left 4 -> bump the left edge -> down 2 -> right 4 onto the
+        apple -> eats it (^^ eyes, hop) -> wraps back to the top-left like a
+        snake going through the wall.
+        0-15%:     row 1, step right (-4 -> +4)
+        15-25%:    bump right (squash, sparks, anger pop, eyes shut), look down
+        25-28%:    down 2 steps
+        28-42%:    row 2, step left (+4 -> -4)
+        42-52%:    bump left, look down
+        52-55%:    down 2 steps
+        55-68%:    row 3, step right onto the apple
+        68-85%:    eat: apple gone, happy eyes, hop
+        85-88%:    wrap (invisible)
+        88-100%:   back at the top-left, blink, ready
+      */
+
+      /* Grid movement of the whole body: hard-cut steps */
+      .snake-grid { animation: snake-grid 6s infinite step-end; }
+
+      /* Whole body visibility for the wrap-around */
+      .snake-vis { animation: snake-vis 6s infinite step-end; }
+
+      /* Bump nudge + squash, and the eating hop (smooth, inside the grid group) */
+      .bump-nudge {
+        transform-origin: 7.5px 15px;
+        animation: bump-nudge 6s infinite ease-out;
+      }
+
+      /* Legs: gentle alternating steps, always walking */
+      .leg-outer { animation: step-outer 0.4s infinite ease-in-out; }
+      .leg-inner { animation: step-inner 0.4s infinite ease-in-out; }
+
+      /* Arms: small swing */
+      .arm-l {
+        transform-origin: 2px 10px;
+        animation: arm-swing-a 0.4s infinite ease-in-out;
+      }
+      .arm-r {
+        transform-origin: 13px 10px;
+        animation: arm-swing-b 0.4s infinite ease-in-out;
+      }
+
+      /* Eyes: normal set (look toward the move direction, shut at bumps) */
+      .eyes-normal {
+        transform-box: fill-box;
+        transform-origin: 50% 50%;
+        animation: eyes-normal 6s infinite ease-in-out;
+      }
+      /* Eyes: happy ^^ set while eating (same timeline) */
+      .eyes-happy { animation: eyes-happy 6s infinite step-end; }
+
+      /* Anger pops: one per side, only at the bumps */
+      .anger-r {
+        transform-box: fill-box;
+        transform-origin: 50% 50%;
+        animation: anger-r 6s infinite ease-out;
+      }
+      .anger-l {
+        transform-box: fill-box;
+        transform-origin: 50% 50%;
+        animation: anger-l 6s infinite ease-out;
+      }
+
+      /* Impact sparks at the two bump points (world space) */
+      .spark-r1 { animation: spark-r1 6s infinite ease-out; }
+      .spark-r2 { animation: spark-r2 6s infinite ease-out; }
+      .spark-l1 { animation: spark-l1 6s infinite ease-out; }
+      .spark-l2 { animation: spark-l2 6s infinite ease-out; }
+
+      /* Apple: eaten at 69%, respawns with the wrap at 88% */
+      .apple { animation: apple-vis 6s infinite step-end; }
+
+      /* Ground shadow follows the grid */
+      .shadow-grid {
+        transform-origin: 7.5px 15.5px;
+        animation: shadow-grid 6s infinite step-end;
+      }
+
+      /* --- Keyframes --- */
+
+      @keyframes snake-grid {
+        0%     { transform: translate(-4px, -8px); }
+        5%     { transform: translate(-2px, -8px); }
+        8.33%  { transform: translate(0, -8px); }
+        11.67% { transform: translate(2px, -8px); }
+        15%    { transform: translate(4px, -8px); }
+        25%    { transform: translate(4px, -6px); }
+        28.33% { transform: translate(4px, -4px); }
+        31.67% { transform: translate(2px, -4px); }
+        35%    { transform: translate(0, -4px); }
+        38.33% { transform: translate(-2px, -4px); }
+        41.67% { transform: translate(-4px, -4px); }
+        51.67% { transform: translate(-4px, -2px); }
+        55%    { transform: translate(-4px, 0); }
+        58.33% { transform: translate(-2px, 0); }
+        61.67% { transform: translate(0, 0); }
+        65%    { transform: translate(2px, 0); }
+        68.33% { transform: translate(4px, 0); }
+        88%    { transform: translate(-4px, -8px); }
+        100%   { transform: translate(-4px, -8px); }
+      }
+
+      @keyframes snake-vis {
+        0%   { opacity: 1; }
+        85%  { opacity: 0; }
+        88%  { opacity: 1; }
+        100% { opacity: 1; }
+      }
+
+      @keyframes bump-nudge {
+        0%, 15%   { transform: translate(0, 0) scale(1, 1); }
+        16.5%     { transform: translate(0.6px, 0) scale(0.92, 1.05); }
+        19%       { transform: translate(0, 0) scale(1, 1); }
+        41.67%    { transform: translate(0, 0) scale(1, 1); }
+        43.2%     { transform: translate(-0.6px, 0) scale(0.92, 1.05); }
+        45.7%     { transform: translate(0, 0) scale(1, 1); }
+        71%       { transform: translate(0, 0) scale(1, 1); }
+        73%       { transform: translate(0, -1.2px) scale(1, 1); }
+        75.5%     { transform: translate(0, 0) scale(1, 1); }
+        100%      { transform: translate(0, 0) scale(1, 1); }
+      }
+
+      @keyframes step-outer {
+        0%, 100% { transform: translateY(0); }
+        50%      { transform: translateY(-0.8px); }
+      }
+      @keyframes step-inner {
+        0%, 100% { transform: translateY(-0.8px); }
+        50%      { transform: translateY(0); }
+      }
+
+      @keyframes arm-swing-a {
+        0%, 100% { transform: rotate(10deg); }
+        50%      { transform: rotate(-6deg); }
+      }
+      @keyframes arm-swing-b {
+        0%, 100% { transform: rotate(-10deg); }
+        50%      { transform: rotate(6deg); }
+      }
+
+      /* Normal eyes: direction parallax, shut at bumps, hidden while eating, blink at 94% */
+      @keyframes eyes-normal {
+        0%, 15%      { transform: translate(1.5px, 0) scaleY(1); opacity: 1; }
+        16%, 18%     { transform: translate(1.5px, 0) scaleY(0.05); opacity: 1; }
+        20%          { transform: translate(1.5px, 0) scaleY(1); opacity: 1; }
+        23%, 30%     { transform: translate(0, 1px) scaleY(1); opacity: 1; }
+        33%, 41.67%  { transform: translate(-1.5px, 0) scaleY(1); opacity: 1; }
+        42.7%, 44.7% { transform: translate(-1.5px, 0) scaleY(0.05); opacity: 1; }
+        47%          { transform: translate(-1.5px, 0) scaleY(1); opacity: 1; }
+        50%, 57%     { transform: translate(0, 1px) scaleY(1); opacity: 1; }
+        60%, 68.5%   { transform: translate(1.5px, 0) scaleY(1); opacity: 1; }
+        69.5%        { transform: translate(1.5px, 0) scaleY(0.05); opacity: 1; }
+        70%          { transform: translate(1.5px, 0) scaleY(0.05); opacity: 0; }
+        84%          { transform: translate(0, 0) scaleY(0.05); opacity: 0; }
+        84.5%        { transform: translate(0, 0) scaleY(0.05); opacity: 1; }
+        86%, 93%     { transform: translate(0, 0) scaleY(1); opacity: 1; }
+        94%          { transform: translate(0, 0) scaleY(0.1); opacity: 1; }
+        95.5%        { transform: translate(0, 0) scaleY(1); opacity: 1; }
+        98%, 100%    { transform: translate(1.5px, 0) scaleY(1); opacity: 1; }
+      }
+      @keyframes eyes-happy {
+        0%   { opacity: 0; }
+        70%  { opacity: 1; }
+        84%  { opacity: 0; }
+        100% { opacity: 0; }
+      }
+
+      @keyframes anger-r {
+        0%, 15%  { transform: scale(0.5); opacity: 0; }
+        16.5%    { transform: scale(1.25); opacity: 1; }
+        18%      { transform: scale(1); opacity: 1; }
+        21%      { transform: scale(1); opacity: 1; }
+        23%      { transform: scale(0.8); opacity: 0; }
+        100%     { transform: scale(0.5); opacity: 0; }
+      }
+      @keyframes anger-l {
+        0%, 41.67% { transform: scale(0.5); opacity: 0; }
+        43.2%      { transform: scale(1.25); opacity: 1; }
+        44.7%      { transform: scale(1); opacity: 1; }
+        47.7%      { transform: scale(1); opacity: 1; }
+        49.7%      { transform: scale(0.8); opacity: 0; }
+        100%       { transform: scale(0.5); opacity: 0; }
+      }
+
+      @keyframes spark-r1 {
+        0%, 15%  { transform: translate(0, 0); opacity: 0; }
+        15.8%    { transform: translate(0, 0); opacity: 0.95; }
+        19.5%    { transform: translate(1.2px, -1.5px); opacity: 0; }
+        100%     { opacity: 0; }
+      }
+      @keyframes spark-r2 {
+        0%, 15.4% { transform: translate(0, 0); opacity: 0; }
+        16.2%     { transform: translate(0, 0); opacity: 0.9; }
+        20%       { transform: translate(1.4px, 0.8px); opacity: 0; }
+        100%      { opacity: 0; }
+      }
+      @keyframes spark-l1 {
+        0%, 41.67% { transform: translate(0, 0); opacity: 0; }
+        42.5%      { transform: translate(0, 0); opacity: 0.95; }
+        46.2%      { transform: translate(-1.2px, -1.5px); opacity: 0; }
+        100%       { opacity: 0; }
+      }
+      @keyframes spark-l2 {
+        0%, 42.1% { transform: translate(0, 0); opacity: 0; }
+        42.9%     { transform: translate(0, 0); opacity: 0.9; }
+        46.7%     { transform: translate(-1.4px, 0.8px); opacity: 0; }
+        100%      { opacity: 0; }
+      }
+
+      @keyframes apple-vis {
+        0%   { opacity: 1; }
+        69%  { opacity: 0; }
+        88%  { opacity: 1; }
+        100% { opacity: 1; }
+      }
+
+      @keyframes shadow-grid {
+        0%     { transform: translateX(-4px) scaleX(0.55); opacity: 0.3; }
+        5%     { transform: translateX(-2px) scaleX(0.55); opacity: 0.3; }
+        8.33%  { transform: translateX(0) scaleX(0.55); opacity: 0.3; }
+        11.67% { transform: translateX(2px) scaleX(0.55); opacity: 0.3; }
+        15%    { transform: translateX(4px) scaleX(0.55); opacity: 0.3; }
+        25%    { transform: translateX(4px) scaleX(0.65); opacity: 0.35; }
+        28.33% { transform: translateX(4px) scaleX(0.75); opacity: 0.4; }
+        31.67% { transform: translateX(2px) scaleX(0.75); opacity: 0.4; }
+        35%    { transform: translateX(0) scaleX(0.75); opacity: 0.4; }
+        38.33% { transform: translateX(-2px) scaleX(0.75); opacity: 0.4; }
+        41.67% { transform: translateX(-4px) scaleX(0.75); opacity: 0.4; }
+        51.67% { transform: translateX(-4px) scaleX(0.85); opacity: 0.45; }
+        55%    { transform: translateX(-4px) scaleX(1); opacity: 0.5; }
+        58.33% { transform: translateX(-2px) scaleX(1); opacity: 0.5; }
+        61.67% { transform: translateX(0) scaleX(1); opacity: 0.5; }
+        65%    { transform: translateX(2px) scaleX(1); opacity: 0.5; }
+        68.33% { transform: translateX(4px) scaleX(1); opacity: 0.5; }
+        85%    { transform: translateX(4px) scaleX(1); opacity: 0; }
+        88%    { transform: translateX(-4px) scaleX(0.55); opacity: 0.3; }
+        100%   { transform: translateX(-4px) scaleX(0.55); opacity: 0.3; }
+      }
+    </style>
+  </defs>
+
+  <!-- Ground Shadow (follows the grid) -->
+  <rect class="shadow-grid" x="3" y="15" width="9" height="1" fill="#000000" opacity="0.5"/>
+
+  <!-- === Pixel apple (snake food) at the bottom-right, drawn behind Clawd === -->
+  <g class="apple">
+    <rect x="19.1" y="9.2" width="0.4" height="0.9" fill="#6D4C41"/>
+    <rect x="19.5" y="9.4" width="0.9" height="0.5" fill="#43A047"/>
+    <rect x="18.5" y="10" width="1.5" height="0.5" fill="#E53935"/>
+    <rect x="18" y="10.5" width="2.5" height="2" fill="#E53935"/>
+    <rect x="18.4" y="10.9" width="0.5" height="0.5" fill="#FF8A80"/>
+  </g>
+
+  <!-- === Clawd: grid movement -> visibility -> bump nudge === -->
+  <g class="snake-grid">
+    <g class="snake-vis">
+      <g class="bump-nudge">
+
+        <!-- Legs -->
+        <g fill="#DE886D">
+          <rect class="leg-outer" x="3" y="13" width="1" height="2"/>
+          <rect class="leg-inner" x="5" y="13" width="1" height="2"/>
+          <rect class="leg-inner" x="9" y="13" width="1" height="2"/>
+          <rect class="leg-outer" x="11" y="13" width="1" height="2"/>
+        </g>
+
+        <!-- Torso -->
+        <rect x="2" y="6" width="11" height="7" fill="#DE886D"/>
+
+        <!-- Eyes: normal set -->
+        <g class="eyes-normal" fill="#000000">
+          <rect x="4" y="8" width="1" height="2"/>
+          <rect x="10" y="8" width="1" height="2"/>
+        </g>
+        <!-- Eyes: happy ^^ set (eating) -->
+        <g class="eyes-happy" fill="none" stroke="#000000" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round" opacity="0">
+          <polyline points="3.5,9.5 4.5,8 5.5,9.5"/>
+          <polyline points="9.5,9.5 10.5,8 11.5,9.5"/>
+        </g>
+
+        <!-- Arms -->
+        <g class="arm-l">
+          <rect x="0" y="9" width="2" height="2" fill="#DE886D"/>
+        </g>
+        <g class="arm-r">
+          <rect x="13" y="9" width="2" height="2" fill="#DE886D"/>
+        </g>
+
+        <!-- Anger pop, right bump (above the top-right of the head) -->
+        <g transform="translate(12.2, 3.4)">
+          <g class="anger-r" opacity="0">
+            <g transform="rotate(45, 1, 0.5)" fill="none" stroke="#FF3D00" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="-0.05,0.15 0.65,0.15 0.65,-0.55"/>
+              <polyline points="2.05,0.15 1.35,0.15 1.35,-0.55"/>
+              <polyline points="2.05,0.85 1.35,0.85 1.35,1.55"/>
+              <polyline points="-0.05,0.85 0.65,0.85 0.65,1.55"/>
+            </g>
+          </g>
+        </g>
+        <!-- Anger pop, left bump (above the top-left of the head) -->
+        <g transform="translate(0.8, 3.4)">
+          <g class="anger-l" opacity="0">
+            <g transform="rotate(45, 1, 0.5)" fill="none" stroke="#FF3D00" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="-0.05,0.15 0.65,0.15 0.65,-0.55"/>
+              <polyline points="2.05,0.15 1.35,0.15 1.35,-0.55"/>
+              <polyline points="2.05,0.85 1.35,0.85 1.35,1.55"/>
+              <polyline points="-0.05,0.85 0.65,0.85 0.65,1.55"/>
+            </g>
+          </g>
+        </g>
+
+      </g>
+    </g>
+  </g>
+
+  <!-- === Impact sparks (world space): right edge on row 1, left edge on row 2 === -->
+  <g>
+    <rect class="spark-r1" x="19.2" y="1.3" width="0.8" height="0.8" fill="#FFC107" opacity="0"/>
+    <rect class="spark-r2" x="19.4" y="2.8" width="0.6" height="0.6" fill="#FF9800" opacity="0"/>
+    <rect class="spark-l1" x="-5" y="5.3" width="0.8" height="0.8" fill="#FFC107" opacity="0"/>
+    <rect class="spark-l2" x="-5.2" y="6.8" width="0.6" height="0.6" fill="#FF9800" opacity="0"/>
+  </g>
+</svg>

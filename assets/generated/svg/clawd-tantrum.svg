@@ -1,0 +1,289 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45" width="500" height="500">
+  <defs>
+    <style>
+      /*
+        Tantrum (气鼓鼓跺脚), v2: 3s cycle, four heavy stomps (L R L R), 0.75s each.
+        Each stomp has three beats: WIND-UP (the leg pair swings out sideways from
+        the hip and lifts, the body rises and leans over the planted side),
+        SLAM (2 frames: leg down, body crushed flat, dust + impact lines, cheek
+        puff, eyes squeezed tighter), HOLD (the body stays low and trembles).
+        No alternating gait, no arm swing, no head shake, no jump - only the
+        vertical stomp language. After the 4th slam he glances away with a
+        "hmph" before the loop restarts.
+        Slots: L 0-25%, R 25-50%, L 50-75%, R 75-100% (glance 92-98%).
+      */
+
+      .tremble { transform-origin: 7.5px 15px; animation: tremble 0.1s infinite linear; }
+      .body { transform-origin: 7.5px 15px; animation: body 3s infinite ease-out; }
+      .legs-l { transform-origin: 4.5px 12px; animation: legs-l 3s infinite ease-out; }
+      .legs-r { transform-origin: 10.5px 12px; animation: legs-r 3s infinite ease-out; }
+      .eyes { transform-box: fill-box; transform-origin: 50% 50%; animation: eyes 3s infinite ease-out; }
+      .arm-l { transform-origin: 2px 10px; animation: arm-l 3s infinite ease-out; }
+      .arm-r { transform-origin: 13px 10px; animation: arm-r 3s infinite ease-out; }
+      .shadow-stomp { transform-box: fill-box; transform-origin: 50% 50%; animation: shadow 3s infinite ease-out; }
+      .hmph-l { transform-box: fill-box; transform-origin: 50% 50%; animation: hmph-l 3s infinite ease-out; }
+      .hmph-r { transform-box: fill-box; transform-origin: 50% 50%; animation: hmph-r 3s infinite ease-out; }
+      .dust-l1 { transform-box: fill-box; transform-origin: 50% 50%; animation: dust-l1 3s infinite ease-out; }
+      .dust-l2 { transform-box: fill-box; transform-origin: 50% 50%; animation: dust-l2 3s infinite ease-out; }
+      .dust-r1 { transform-box: fill-box; transform-origin: 50% 50%; animation: dust-r1 3s infinite ease-out; }
+      .dust-r2 { transform-box: fill-box; transform-origin: 50% 50%; animation: dust-r2 3s infinite ease-out; }
+      .impact-l { animation: impact-l 3s infinite step-end; }
+      .impact-r { animation: impact-r 3s infinite step-end; }
+
+      /* --- Keyframes --- */
+
+      @keyframes tremble {
+        0%   { transform: translate(0.12px, 0); }
+        50%  { transform: translate(-0.12px, 0.08px); }
+        100% { transform: translate(0.12px, 0); }
+      }
+
+      /*
+        Body (puffed baseline scale(1.08,0.96)):
+        wind-up: rise 0.5 + lean 3deg over the planted side (right for a left stomp)
+        slam:    drop 0.7, crushed scale(1.2,0.82)
+        hold:    stay low scale(1.12,0.92), then ease back to the baseline
+      */
+      @keyframes body {
+        0%        { transform: translateY(0) rotate(0deg) scale(1.08, 0.96); }
+        10%       { transform: translateY(-0.5px) rotate(3.5deg) scale(1.05, 0.99); }
+        12%       { transform: translateY(-0.6px) rotate(4deg) scale(1.05, 0.99); }
+        14%       { transform: translateY(0.7px) rotate(0deg) scale(1.2, 0.82); }
+        18%       { transform: translateY(0.3px) rotate(0deg) scale(1.12, 0.92); }
+        25%       { transform: translateY(0) rotate(0deg) scale(1.08, 0.96); }
+        35%       { transform: translateY(-0.5px) rotate(-3.5deg) scale(1.05, 0.99); }
+        37%       { transform: translateY(-0.6px) rotate(-4deg) scale(1.05, 0.99); }
+        39%       { transform: translateY(0.7px) rotate(0deg) scale(1.2, 0.82); }
+        43%       { transform: translateY(0.3px) rotate(0deg) scale(1.12, 0.92); }
+        50%       { transform: translateY(0) rotate(0deg) scale(1.08, 0.96); }
+        60%       { transform: translateY(-0.5px) rotate(3.5deg) scale(1.05, 0.99); }
+        62%       { transform: translateY(-0.6px) rotate(4deg) scale(1.05, 0.99); }
+        64%       { transform: translateY(0.7px) rotate(0deg) scale(1.2, 0.82); }
+        68%       { transform: translateY(0.3px) rotate(0deg) scale(1.12, 0.92); }
+        75%       { transform: translateY(0) rotate(0deg) scale(1.08, 0.96); }
+        85%       { transform: translateY(-0.5px) rotate(-3.5deg) scale(1.05, 0.99); }
+        87%       { transform: translateY(-0.6px) rotate(-4deg) scale(1.05, 0.99); }
+        89%       { transform: translateY(0.7px) rotate(0deg) scale(1.2, 0.82); }
+        93%       { transform: translateY(0.3px) rotate(0deg) scale(1.12, 0.92); }
+        100%      { transform: translateY(0) rotate(0deg) scale(1.08, 0.96); }
+      }
+
+      /* Left leg pair: swings out to the left from the hip and lifts, then slams down (stomps 1 and 3) */
+      @keyframes legs-l {
+        0%        { transform: rotate(0deg) translateY(0); }
+        10%       { transform: rotate(38deg) translateY(-1.2px); }
+        12%       { transform: rotate(42deg) translateY(-1.4px); }
+        14%       { transform: rotate(0deg) translateY(0); }
+        50%       { transform: rotate(0deg) translateY(0); }
+        60%       { transform: rotate(38deg) translateY(-1.2px); }
+        62%       { transform: rotate(42deg) translateY(-1.4px); }
+        64%       { transform: rotate(0deg) translateY(0); }
+        100%      { transform: rotate(0deg) translateY(0); }
+      }
+      /* Right leg pair: stomps 2 and 4 */
+      @keyframes legs-r {
+        0%, 25%   { transform: rotate(0deg) translateY(0); }
+        35%       { transform: rotate(-38deg) translateY(-1.2px); }
+        37%       { transform: rotate(-42deg) translateY(-1.4px); }
+        39%       { transform: rotate(0deg) translateY(0); }
+        75%       { transform: rotate(0deg) translateY(0); }
+        85%       { transform: rotate(-38deg) translateY(-1.2px); }
+        87%       { transform: rotate(-42deg) translateY(-1.4px); }
+        89%       { transform: rotate(0deg) translateY(0); }
+        100%      { transform: rotate(0deg) translateY(0); }
+      }
+
+      /* Eyes: chevrons squeeze tighter on each slam; glance away at the end */
+      @keyframes eyes {
+        0%, 12%   { transform: translate(0, 0) scale(1, 1); }
+        14%       { transform: translate(0, 0.3px) scale(0.8, 0.85); }
+        22%       { transform: translate(0, 0) scale(1, 1); }
+        37%       { transform: translate(0, 0) scale(1, 1); }
+        39%       { transform: translate(0, 0.3px) scale(0.8, 0.85); }
+        47%       { transform: translate(0, 0) scale(1, 1); }
+        62%       { transform: translate(0, 0) scale(1, 1); }
+        64%       { transform: translate(0, 0.3px) scale(0.8, 0.85); }
+        72%       { transform: translate(0, 0) scale(1, 1); }
+        87%       { transform: translate(0, 0) scale(1, 1); }
+        89%       { transform: translate(0, 0.3px) scale(0.8, 0.85); }
+        92%       { transform: translate(-2.2px, 0) scale(1, 1); }
+        97%       { transform: translate(-2.2px, 0) scale(1, 1); }
+        100%      { transform: translate(0, 0) scale(1, 1); }
+      }
+
+      /* Fists clenched at the sides (held slightly down), jerking down on each slam - no swinging */
+      @keyframes arm-l {
+        0%, 12%   { transform: rotate(-15deg); }
+        14%       { transform: rotate(-40deg); }
+        22%       { transform: rotate(-15deg); }
+        37%       { transform: rotate(-15deg); }
+        39%       { transform: rotate(-40deg); }
+        47%       { transform: rotate(-15deg); }
+        62%       { transform: rotate(-15deg); }
+        64%       { transform: rotate(-40deg); }
+        72%       { transform: rotate(-15deg); }
+        87%       { transform: rotate(-15deg); }
+        89%       { transform: rotate(-40deg); }
+        97%, 100% { transform: rotate(-15deg); }
+      }
+      @keyframes arm-r {
+        0%, 12%   { transform: rotate(15deg); }
+        14%       { transform: rotate(40deg); }
+        22%       { transform: rotate(15deg); }
+        37%       { transform: rotate(15deg); }
+        39%       { transform: rotate(40deg); }
+        47%       { transform: rotate(15deg); }
+        62%       { transform: rotate(15deg); }
+        64%       { transform: rotate(40deg); }
+        72%       { transform: rotate(15deg); }
+        87%       { transform: rotate(15deg); }
+        89%       { transform: rotate(40deg); }
+        97%, 100% { transform: rotate(15deg); }
+      }
+
+      @keyframes shadow {
+        0%, 12%   { transform: scaleX(1.06); opacity: 0.5; }
+        14%       { transform: scaleX(1.3); opacity: 0.62; }
+        22%       { transform: scaleX(1.1); opacity: 0.52; }
+        37%       { transform: scaleX(1.06); opacity: 0.5; }
+        39%       { transform: scaleX(1.3); opacity: 0.62; }
+        47%       { transform: scaleX(1.1); opacity: 0.52; }
+        62%       { transform: scaleX(1.06); opacity: 0.5; }
+        64%       { transform: scaleX(1.3); opacity: 0.62; }
+        72%       { transform: scaleX(1.1); opacity: 0.52; }
+        87%       { transform: scaleX(1.06); opacity: 0.5; }
+        89%       { transform: scaleX(1.3); opacity: 0.62; }
+        97%, 100% { transform: scaleX(1.06); opacity: 0.5; }
+      }
+
+      /* cheek puffs: left cheek on left stomps (14%, 64%) and the final hmph (92%), right cheek on right stomps (39%, 89%) */
+      @keyframes hmph-l {
+        0%, 13%   { transform: translate(0, 0) scale(0.5); opacity: 0; }
+        15%       { transform: translate(-0.5px, -0.3px) scale(1); opacity: 0.9; }
+        24%       { transform: translate(-2.4px, -1.2px) scale(1.4); opacity: 0; }
+        63%       { transform: translate(0, 0) scale(0.5); opacity: 0; }
+        65%       { transform: translate(-0.5px, -0.3px) scale(1); opacity: 0.9; }
+        74%       { transform: translate(-2.4px, -1.2px) scale(1.4); opacity: 0; }
+        91%       { transform: translate(0, 0) scale(0.5); opacity: 0; }
+        93%       { transform: translate(-0.6px, -0.4px) scale(1.2); opacity: 0.95; }
+        100%      { transform: translate(-3px, -1.6px) scale(1.6); opacity: 0; }
+      }
+      @keyframes hmph-r {
+        0%, 38%   { transform: translate(0, 0) scale(0.5); opacity: 0; }
+        40%       { transform: translate(0.5px, -0.3px) scale(1); opacity: 0.9; }
+        49%       { transform: translate(2.4px, -1.2px) scale(1.4); opacity: 0; }
+        88%       { transform: translate(0, 0) scale(0.5); opacity: 0; }
+        90%       { transform: translate(0.5px, -0.3px) scale(1); opacity: 0.9; }
+        99%, 100% { transform: translate(2.4px, -1.2px) scale(1.4); opacity: 0; }
+      }
+
+      /* dust bursts at the slamming foot */
+      @keyframes dust-l1 {
+        0%, 13%  { transform: translate(0, 0) scale(0.5); opacity: 0; }
+        15%      { transform: translate(-0.6px, -0.5px) scale(1); opacity: 0.9; }
+        26%      { transform: translate(-2.6px, -1.6px) scale(1.4); opacity: 0; }
+        63%      { transform: translate(0, 0) scale(0.5); opacity: 0; }
+        65%      { transform: translate(-0.6px, -0.5px) scale(1); opacity: 0.9; }
+        76%      { transform: translate(-2.6px, -1.6px) scale(1.4); opacity: 0; }
+        100%     { opacity: 0; }
+      }
+      @keyframes dust-l2 {
+        0%, 13.5% { transform: translate(0, 0) scale(0.5); opacity: 0; }
+        15.5%     { transform: translate(0.4px, -0.7px) scale(1); opacity: 0.85; }
+        26%       { transform: translate(1.2px, -2.4px) scale(1.3); opacity: 0; }
+        63.5%     { transform: translate(0, 0) scale(0.5); opacity: 0; }
+        65.5%     { transform: translate(0.4px, -0.7px) scale(1); opacity: 0.85; }
+        76%       { transform: translate(1.2px, -2.4px) scale(1.3); opacity: 0; }
+        100%      { opacity: 0; }
+      }
+      @keyframes dust-r1 {
+        0%, 38%  { transform: translate(0, 0) scale(0.5); opacity: 0; }
+        40%      { transform: translate(0.6px, -0.5px) scale(1); opacity: 0.9; }
+        51%      { transform: translate(2.6px, -1.6px) scale(1.4); opacity: 0; }
+        88%      { transform: translate(0, 0) scale(0.5); opacity: 0; }
+        90%      { transform: translate(0.6px, -0.5px) scale(1); opacity: 0.9; }
+        100%     { transform: translate(2.6px, -1.6px) scale(1.4); opacity: 0; }
+      }
+      @keyframes dust-r2 {
+        0%, 38.5% { transform: translate(0, 0) scale(0.5); opacity: 0; }
+        40.5%     { transform: translate(-0.4px, -0.7px) scale(1); opacity: 0.85; }
+        51%       { transform: translate(-1.2px, -2.4px) scale(1.3); opacity: 0; }
+        88.5%     { transform: translate(0, 0) scale(0.5); opacity: 0; }
+        90.5%     { transform: translate(-0.4px, -0.7px) scale(1); opacity: 0.85; }
+        100%      { transform: translate(-1.2px, -2.4px) scale(1.3); opacity: 0; }
+      }
+      /* "thud" impact lines flash for two frames at each slam */
+      @keyframes impact-l {
+        0%   { opacity: 0; }
+        14%  { opacity: 1; }
+        17%  { opacity: 0; }
+        64%  { opacity: 1; }
+        67%  { opacity: 0; }
+        100% { opacity: 0; }
+      }
+      @keyframes impact-r {
+        0%   { opacity: 0; }
+        39%  { opacity: 1; }
+        42%  { opacity: 0; }
+        89%  { opacity: 1; }
+        92%  { opacity: 0; }
+        100% { opacity: 0; }
+      }
+    </style>
+  </defs>
+
+  <!-- Ground Shadow -->
+  <rect class="shadow-stomp" x="3" y="15" width="9" height="1" fill="#000000" opacity="0.5"/>
+
+  <!-- Dust at the feet -->
+  <g fill="#BDBDBD">
+    <rect class="dust-l1" x="2.2" y="14.2" width="1" height="1"/>
+    <rect class="dust-l2" x="4.6" y="14.3" width="0.8" height="0.8"/>
+    <rect class="dust-r1" x="11.8" y="14.2" width="1" height="1"/>
+    <rect class="dust-r2" x="9.6" y="14.3" width="0.8" height="0.8"/>
+  </g>
+  <!-- "thud" impact lines -->
+  <g stroke="#424242" stroke-width="0.35" stroke-linecap="round">
+    <g class="impact-l" opacity="0">
+      <line x1="1.6" y1="14.6" x2="0.4" y2="14.2"/><line x1="1.8" y1="15.4" x2="0.6" y2="15.8"/><line x1="1.4" y1="15" x2="0.1" y2="15"/>
+    </g>
+    <g class="impact-r" opacity="0">
+      <line x1="13.4" y1="14.6" x2="14.6" y2="14.2"/><line x1="13.2" y1="15.4" x2="14.4" y2="15.8"/><line x1="13.6" y1="15" x2="14.9" y2="15"/>
+    </g>
+  </g>
+
+  <g class="tremble">
+    <!-- Legs: 1x3 from y=12 (1px into the torso); each pair swings out from its hip and slams -->
+    <g fill="#DE886D">
+      <g class="legs-l">
+        <rect x="3" y="12" width="1" height="3"/>
+        <rect x="5" y="12" width="1" height="3"/>
+      </g>
+      <g class="legs-r">
+        <rect x="9" y="12" width="1" height="3"/>
+        <rect x="11" y="12" width="1" height="3"/>
+      </g>
+    </g>
+
+    <!-- Body: puffed, rising/leaning on the wind-up, crushed on the slam -->
+    <g class="body">
+      <rect x="2" y="6" width="11" height="7" fill="#DE886D"/>
+
+      <rect x="2.6" y="10.2" width="1.8" height="0.8" fill="#F48FB1" opacity="0.9"/>
+      <rect x="10.6" y="10.2" width="1.8" height="0.8" fill="#F48FB1" opacity="0.9"/>
+
+      <g class="eyes" fill="none" stroke="#000000" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="3.6,8.1 5.2,9 3.6,9.9"/>
+        <polyline points="11.4,8.1 9.8,9 11.4,9.9"/>
+      </g>
+
+      <g class="arm-l"><rect x="0" y="9" width="2" height="2" fill="#DE886D"/></g>
+      <g class="arm-r"><rect x="13" y="9" width="2" height="2" fill="#DE886D"/></g>
+
+      <g fill="#CFD8DC">
+        <rect class="hmph-l" x="0.4" y="10.6" width="1" height="0.9" rx="0.45" opacity="0"/>
+        <rect class="hmph-r" x="13.6" y="10.6" width="1" height="0.9" rx="0.45" opacity="0"/>
+      </g>
+    </g>
+  </g>
+</svg>

@@ -99,6 +99,8 @@ python tools/svg_to_gif.py \
 
 有些客户端对透明 GIF 的支持不太好，碰到这种情况加上 `--background white` 即可。
 
+如果导出的 GIF 太大（微信表情上限 500 KB），加上 `--resample nearest`：改用最近邻缩放，像素边缘更锐利，体积通常能小 25–30%；`--colors 128` 还能再压一点。
+
 ## 致谢与许可
 
 代码采用 MIT 许可证。Clawd 的基础角色设计参考了开源项目

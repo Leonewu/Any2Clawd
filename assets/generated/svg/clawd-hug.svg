@@ -1,0 +1,168 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45" width="500" height="500">
+  <defs>
+    <style>
+      /*
+        Hug (抱抱): 4s cycle. Clawd holds a mini Clawd (0.5x, outlined) against his chest,
+        both arms wrapped round it in front. He rocks gently side to side the
+        whole time; at 15-35% he squeezes twice (body pulls in, arms tighten,
+        the mini pops up a little, eyes squint happier), at 58-78% his right
+        arm pats the mini's back twice, and a couple of small hearts drift up
+        from between them. Both have happy ^^ eyes and pink cheeks.
+      */
+
+      .sway { transform-origin: 7.5px 15px; animation: sway 2s infinite ease-in-out; }
+      .body { transform-origin: 7.5px 15px; animation: body 4s infinite ease-in-out; }
+      .arm-l { animation: arm-l 4s infinite ease-in-out; }
+      .arm-r { animation: arm-r 4s infinite ease-in-out; }
+      .mini { transform-origin: 7.5px 14px; animation: mini 4s infinite ease-in-out; }
+      .eyes-big { transform-box: fill-box; transform-origin: 50% 50%; animation: eyes-big 4s infinite ease-in-out; }
+      .heart-1 { transform-box: fill-box; transform-origin: 50% 50%; animation: heart 4s infinite ease-out; }
+      .heart-2 { transform-box: fill-box; transform-origin: 50% 50%; animation: heart 4s 2s infinite ease-out; }
+      .shadow-hug { transform-box: fill-box; transform-origin: 50% 50%; animation: shadow 2s infinite ease-in-out; }
+
+      /* --- Keyframes --- */
+
+      @keyframes sway {
+        0%, 100% { transform: rotate(-3deg); }
+        50%      { transform: rotate(3deg); }
+      }
+
+      /* body pulls in on each squeeze */
+      @keyframes body {
+        0%, 14%   { transform: scale(1, 1); }
+        18%       { transform: scale(1.04, 0.97); }
+        22%       { transform: scale(1, 1); }
+        27%       { transform: scale(1, 1); }
+        31%       { transform: scale(1.05, 0.965); }
+        36%, 100% { transform: scale(1, 1); }
+      }
+
+      /* left arm: wrapped in front of the mini; tightens on squeezes */
+      @keyframes arm-l {
+        0%, 14%   { transform: translate(4.5px, 3.3px); }
+        18%       { transform: translate(5.1px, 3.3px); }
+        22%       { transform: translate(4.5px, 3.3px); }
+        27%       { transform: translate(4.5px, 3.3px); }
+        31%       { transform: translate(5.2px, 3.3px); }
+        36%, 100% { transform: translate(4.5px, 3.3px); }
+      }
+      /* right arm: wrapped, tightens on squeezes, then pats the mini's back twice */
+      @keyframes arm-r {
+        0%, 14%   { transform: translate(-4.5px, 3.3px); }
+        18%       { transform: translate(-5.1px, 3.3px); }
+        22%       { transform: translate(-4.5px, 3.3px); }
+        27%       { transform: translate(-4.5px, 3.3px); }
+        31%       { transform: translate(-5.2px, 3.3px); }
+        36%, 58%  { transform: translate(-4.5px, 3.3px); }
+        63%       { transform: translate(-4.3px, 2.5px); }
+        68%       { transform: translate(-4.5px, 3.3px); }
+        73%       { transform: translate(-4.3px, 2.5px); }
+        78%, 100% { transform: translate(-4.5px, 3.3px); }
+      }
+
+      /* mini: pops up and squashes a touch when squeezed, wiggles on the pats */
+      @keyframes mini {
+        0%, 14%   { transform: translateY(0) scale(1, 1); }
+        18%       { transform: translateY(-0.4px) scale(0.95, 1.05); }
+        22%       { transform: translateY(0) scale(1, 1); }
+        27%       { transform: translateY(0) scale(1, 1); }
+        31%       { transform: translateY(-0.5px) scale(0.94, 1.06); }
+        36%, 60%  { transform: translateY(0) scale(1, 1); }
+        64%       { transform: translateY(0.2px) scale(1.02, 0.98); }
+        68%       { transform: translateY(0) scale(1, 1); }
+        74%       { transform: translateY(0.2px) scale(1.02, 0.98); }
+        78%, 100% { transform: translateY(0) scale(1, 1); }
+      }
+
+      /* big Clawd's ^^ eyes squint a little more on each squeeze */
+      @keyframes eyes-big {
+        0%, 14%   { transform: scaleY(1); }
+        18%       { transform: scaleY(0.7); }
+        22%       { transform: scaleY(1); }
+        27%       { transform: scaleY(1); }
+        31%       { transform: scaleY(0.7); }
+        36%, 100% { transform: scaleY(1); }
+      }
+
+      @keyframes heart {
+        0%, 4%   { transform: translate(0, 0) scale(0.6); opacity: 0; }
+        12%      { transform: translate(0, -0.8px) scale(1); opacity: 0.95; }
+        40%      { transform: translate(0.6px, -4px) scale(1); opacity: 0.9; }
+        50%      { transform: translate(0.8px, -5.2px) scale(1.1); opacity: 0; }
+        100%     { transform: translate(0.8px, -5.2px) scale(1.1); opacity: 0; }
+      }
+
+      @keyframes shadow {
+        0%, 100% { transform: translateX(-0.4px) scaleX(1); opacity: 0.5; }
+        50%      { transform: translateX(0.4px) scaleX(1); opacity: 0.5; }
+      }
+    </style>
+  </defs>
+
+  <!-- Ground Shadow -->
+  <rect class="shadow-hug" x="3" y="15" width="9" height="1" fill="#000000" opacity="0.5"/>
+
+  <!-- Both rock together -->
+  <g class="sway">
+    <!-- Legs (planted) -->
+    <g fill="#DE886D">
+      <rect x="3" y="13" width="1" height="2"/>
+      <rect x="5" y="13" width="1" height="2"/>
+      <rect x="9" y="13" width="1" height="2"/>
+      <rect x="11" y="13" width="1" height="2"/>
+    </g>
+
+    <g class="body">
+      <!-- Big Clawd torso -->
+      <rect x="2" y="6" width="11" height="7" fill="#DE886D"/>
+
+      <!-- cheeks -->
+      <rect x="2.6" y="10" width="1.5" height="0.6" fill="#F8BBD0" opacity="0.9"/>
+      <rect x="10.9" y="10" width="1.5" height="0.6" fill="#F8BBD0" opacity="0.9"/>
+
+      <!-- big ^^ eyes -->
+      <g class="eyes-big" fill="none" stroke="#000000" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="3.5,9.5 4.5,8 5.5,9.5"/>
+        <polyline points="9.5,9.5 10.5,8 11.5,9.5"/>
+      </g>
+
+      <!-- === Mini Clawd (0.5x) held against the chest: torso (4.75,10.5) 5.5x3.5, hanging 1 unit below
+           the big torso; outlined in a darker body tone so it reads against the same-coloured chest === -->
+      <g class="mini">
+        <g transform="translate(4.75, 10.5) scale(0.5) translate(-2, -6)" stroke="#B85C42" stroke-width="0.6" stroke-linejoin="round">
+          <rect x="0" y="9" width="2" height="2" fill="#DE886D"/>
+          <rect x="13" y="9" width="2" height="2" fill="#DE886D"/>
+          <rect x="2" y="6" width="11" height="7" fill="#DE886D"/>
+          <g stroke="none">
+            <rect x="2.6" y="10.2" width="1.6" height="0.7" fill="#F8BBD0" opacity="0.9"/>
+            <rect x="10.8" y="10.2" width="1.6" height="0.7" fill="#F8BBD0" opacity="0.9"/>
+          </g>
+          <g fill="none" stroke="#000000" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="3.5,9.5 4.5,8 5.5,9.5"/>
+            <polyline points="9.5,9.5 10.5,8 11.5,9.5"/>
+          </g>
+        </g>
+      </g>
+
+      <!-- Big arms wrapped round the mini (drawn over it, with drop shadows) -->
+      <g class="arm-l">
+        <rect x="0" y="9" width="2" height="2" fill="#DE886D" stroke="#B85C42" stroke-width="0.3" stroke-linejoin="round"/>
+      </g>
+      <g class="arm-r">
+        <rect x="13" y="9" width="2" height="2" fill="#DE886D" stroke="#B85C42" stroke-width="0.3" stroke-linejoin="round"/>
+      </g>
+    </g>
+  </g>
+
+  <!-- Hearts drifting up from between them -->
+  <g fill="#F48FB1">
+    <g class="heart-1" opacity="0">
+      <rect x="11.6" y="6.2" width="0.5" height="0.5"/><rect x="12.4" y="6.2" width="0.5" height="0.5"/>
+      <rect x="11.4" y="6.7" width="1.7" height="0.5"/><rect x="11.8" y="7.2" width="0.9" height="0.5"/><rect x="12.1" y="7.7" width="0.3" height="0.3"/>
+    </g>
+    <g class="heart-2" opacity="0">
+      <rect x="1.6" y="6.8" width="0.5" height="0.5"/><rect x="2.4" y="6.8" width="0.5" height="0.5"/>
+      <rect x="1.4" y="7.3" width="1.7" height="0.5"/><rect x="1.8" y="7.8" width="0.9" height="0.5"/><rect x="2.1" y="8.3" width="0.3" height="0.3"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,220 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45" width="500" height="500">
+  <defs>
+    <style>
+      /*
+        Cat nap (cozy): 4.8s cycle. A small grey cat is curled up asleep on top
+        of Clawd's head. Clawd stands perfectly still and content - happy ^^
+        eyes, pink cheeks, slow breathing - and gently pats the cat with one
+        arm. Zzz float up from the cat, two tiny hearts drift up too. The cat
+        breathes with him, flicks an ear once and twitches the tip of its tail
+        once per loop. Nothing here is fast.
+      */
+
+      /* Clawd: slow breathing (torso + face + cat ride on it; legs stay put) */
+      .breathe {
+        transform-origin: 7.5px 13px;
+        animation: breathe 2.4s infinite ease-in-out;
+      }
+
+      /* Right arm: raised onto the cat, patting slowly */
+      .pat {
+        animation: pat 1.2s infinite ease-in-out;
+      }
+
+      /* Cat: breathes a little slower than Clawd's rhythm would suggest (same 2.4s, small) */
+      .cat-breathe {
+        transform-origin: 8px 6px;
+        animation: cat-breathe 2.4s infinite ease-in-out;
+      }
+      /* Ear flick once per loop */
+      .ear-flick {
+        transform-origin: 9.6px 2.6px;
+        animation: ear-flick 4.8s infinite ease-in-out;
+      }
+      /* Tail tip twitch once per loop */
+      .tail-tip {
+        transform-origin: 3.6px 5.4px;
+        animation: tail-tip 4.8s infinite ease-in-out;
+      }
+
+      /* Zzz: three letters, staggered */
+      .zz { opacity: 0; }
+      .zz-1 { animation: zz-float 2.4s infinite ease-out; }
+      .zz-2 { animation: zz-float 2.4s 0.8s infinite ease-out; }
+      .zz-3 { animation: zz-float 2.4s 1.6s infinite ease-out; }
+
+      /* Tiny hearts drifting up */
+      .heart { opacity: 0; }
+      .heart-1 { animation: heart-float 4.8s infinite ease-out; }
+      .heart-2 { animation: heart-float 4.8s 2.4s infinite ease-out; }
+
+      /* Shadow */
+      .shadow-nap {
+        transform-box: fill-box;
+        transform-origin: 50% 50%;
+        animation: shadow-breathe 2.4s infinite ease-in-out;
+      }
+
+      /* --- Keyframes --- */
+
+      @keyframes breathe {
+        0%, 100% { transform: scale(1, 1); }
+        50%      { transform: scale(1.015, 0.985); }
+      }
+
+      @keyframes pat {
+        0%, 100% { transform: translate(-1.5px, -5px); }
+        50%      { transform: translate(-1.5px, -4.4px); }
+      }
+
+      @keyframes cat-breathe {
+        0%, 100% { transform: scale(1, 1); }
+        50%      { transform: scale(1.02, 1.06); }
+      }
+
+      @keyframes ear-flick {
+        0%, 60%   { transform: rotate(0deg); }
+        62%       { transform: rotate(-25deg); }
+        64%       { transform: rotate(0deg); }
+        66%       { transform: rotate(-18deg); }
+        68%, 100% { transform: rotate(0deg); }
+      }
+
+      @keyframes tail-tip {
+        0%, 25%   { transform: rotate(0deg); }
+        29%       { transform: rotate(-30deg); }
+        34%       { transform: rotate(0deg); }
+        100%      { transform: rotate(0deg); }
+      }
+
+      @keyframes zz-float {
+        0%   { transform: translate(0, 0) scale(0.6); opacity: 0; }
+        15%  { opacity: 0.95; }
+        70%  { opacity: 0.9; }
+        100% { transform: translate(-1.8px, -5.5px) scale(1.25); opacity: 0; }
+      }
+
+      @keyframes heart-float {
+        0%, 4%   { transform: translate(0, 0) scale(0.7); opacity: 0; }
+        12%      { opacity: 0.95; }
+        40%      { opacity: 0.9; }
+        50%      { transform: translate(1px, -4.5px) scale(1); opacity: 0; }
+        100%     { transform: translate(1px, -4.5px) scale(1); opacity: 0; }
+      }
+
+      @keyframes shadow-breathe {
+        0%, 100% { transform: scaleX(1); opacity: 0.5; }
+        50%      { transform: scaleX(1.015); opacity: 0.48; }
+      }
+    </style>
+  </defs>
+
+  <!-- Ground Shadow -->
+  <rect class="shadow-nap" x="3" y="15" width="9" height="1" fill="#000000" opacity="0.5"/>
+
+  <!-- Legs (planted, do not breathe) -->
+  <g fill="#DE886D">
+    <rect x="3" y="13" width="1" height="2"/>
+    <rect x="5" y="13" width="1" height="2"/>
+    <rect x="9" y="13" width="1" height="2"/>
+    <rect x="11" y="13" width="1" height="2"/>
+  </g>
+
+  <!-- Clawd body + cat (breathe together) -->
+  <g class="breathe">
+    <!-- Torso -->
+    <rect x="2" y="6" width="11" height="7" fill="#DE886D"/>
+
+    <!-- Pink cheeks -->
+    <rect x="3" y="10.3" width="1.3" height="0.6" fill="#F8BBD0" opacity="0.9"/>
+    <rect x="10.7" y="10.3" width="1.3" height="0.6" fill="#F8BBD0" opacity="0.9"/>
+
+    <!-- Content ^^ eyes -->
+    <g fill="none" stroke="#000000" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="3.5,9.5 4.5,8 5.5,9.5"/>
+      <polyline points="9.5,9.5 10.5,8 11.5,9.5"/>
+    </g>
+
+    <!-- Left arm at the side -->
+    <rect x="0" y="9" width="2" height="2" fill="#DE886D"/>
+
+    <!-- === Cat curled up on the head (bottom edge on y=6): drawn head-right, then mirrored (head left,
+         tail right) and scaled 1.15x about (7.5,6) === -->
+    <g transform="translate(7.5, 6) scale(1.15) translate(-7.5, -6) translate(15, 0) scale(-1, 1)">
+    <g class="cat-breathe">
+      <!-- Tail curling along the left side, tip twitches -->
+      <g fill="#8D9DA6">
+        <rect x="3.5" y="5" width="1.2" height="1" />
+        <rect x="3.2" y="4.2" width="1" height="1.2"/>
+        <g class="tail-tip">
+          <rect x="3.3" y="3.3" width="1" height="1"/>
+          <rect x="3.9" y="2.7" width="1" height="0.9" fill="#607D8B"/>
+        </g>
+      </g>
+      <!-- Body: rounded lump -->
+      <g fill="#8D9DA6">
+        <rect x="4.5" y="4.6" width="6.4" height="1.4"/>
+        <rect x="5" y="3.4" width="5.4" height="1.3"/>
+        <rect x="5.8" y="2.8" width="3.6" height="0.7"/>
+      </g>
+      <!-- Stripes -->
+      <g fill="#607D8B">
+        <rect x="6" y="3.4" width="0.6" height="1.6"/>
+        <rect x="7.4" y="3" width="0.6" height="2"/>
+        <rect x="8.8" y="3.4" width="0.6" height="1.6"/>
+      </g>
+      <!-- Head (right side), ears, face -->
+      <g fill="#8D9DA6">
+        <rect x="8.6" y="3.2" width="3.1" height="2.8"/>
+        <rect x="8.9" y="2.6" width="0.8" height="0.7"/>
+        <g class="ear-flick">
+          <rect x="10.6" y="2.6" width="0.8" height="0.7"/>
+          <rect x="10.8" y="2.85" width="0.4" height="0.35" fill="#F8BBD0"/>
+        </g>
+        <rect x="9.1" y="2.85" width="0.4" height="0.35" fill="#F8BBD0"/>
+      </g>
+      <!-- Closed eyes + tiny nose -->
+      <g fill="#37474F">
+        <rect x="9.2" y="4.2" width="0.9" height="0.3"/>
+        <rect x="10.5" y="4.2" width="0.9" height="0.3"/>
+        <rect x="10.05" y="4.9" width="0.4" height="0.3" fill="#F48FB1"/>
+      </g>
+      <!-- Front paws tucked under the chin -->
+      <g fill="#B0BEC5">
+        <rect x="9.3" y="5.4" width="1" height="0.6"/>
+        <rect x="10.5" y="5.4" width="1" height="0.6"/>
+      </g>
+    </g>
+    </g>
+
+    <!-- Right arm: raised from the shoulder onto the cat's rear (x 11.5-13.5, y 4-6), patting slowly; the tail tip pokes out above it -->
+    <g class="pat">
+      <rect x="13" y="9" width="2" height="2" fill="#DE886D"/>
+    </g>
+  </g>
+
+  <!-- Zzz floating up from the cat's head -->
+  <g font-family="monospace" font-weight="bold" fill="#7986CB">
+    <text class="zz zz-1" x="1.6" y="1.6" font-size="2.2">z</text>
+    <text class="zz zz-2" x="2.2" y="1.1" font-size="2.6" fill="#9FA8DA">z</text>
+    <text class="zz zz-3" x="1.2" y="1.4" font-size="3" fill="#7986CB">Z</text>
+  </g>
+
+  <!-- Tiny pixel hearts drifting up on the right -->
+  <g fill="#F48FB1">
+    <g class="heart heart-1">
+      <rect x="13.7" y="3.6" width="0.5" height="0.5"/>
+      <rect x="14.5" y="3.6" width="0.5" height="0.5"/>
+      <rect x="13.5" y="4.1" width="1.7" height="0.5"/>
+      <rect x="13.9" y="4.6" width="0.9" height="0.5"/>
+      <rect x="14.2" y="5.1" width="0.3" height="0.3"/>
+    </g>
+    <g class="heart heart-2">
+      <rect x="14.7" y="1.6" width="0.5" height="0.5"/>
+      <rect x="15.5" y="1.6" width="0.5" height="0.5"/>
+      <rect x="14.5" y="2.1" width="1.7" height="0.5"/>
+      <rect x="14.9" y="2.6" width="0.9" height="0.5"/>
+      <rect x="15.2" y="3.1" width="0.3" height="0.3"/>
+    </g>
+  </g>
+</svg>
