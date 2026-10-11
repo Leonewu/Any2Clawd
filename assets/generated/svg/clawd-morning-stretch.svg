@@ -1,0 +1,196 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45" width="500" height="500">
+  <defs>
+    <style>
+      /*
+        Morning stretch: 5s cycle, one shared timeline.
+        0-22%  curled up, eyes shut, slow sleepy breath
+        22-40% stretch tall, both arms raised overhead; sun fades in top-right
+        40-52% hold the stretch, arms quiver
+        52-66% arms drop, eyes pop open, little bounce; sun rays flash
+        66-86% awake
+        86-100% sun fades, curl back up (loop)
+      */
+
+      .body {
+        transform-origin: 7.5px 13px;
+        animation: body-stretch 5s infinite ease-in-out;
+      }
+
+      .eyes-shut { animation: eyes-shut 5s infinite; }
+      .eyes-open { animation: eyes-open 5s infinite; }
+      .eyes-yawn { animation: eyes-yawn 5s infinite; }
+      .eyes-pop {
+        transform-box: fill-box;
+        transform-origin: 50% 50%;
+        animation: eyes-pop 5s infinite ease-out;
+      }
+
+      .arm-l {
+        transform-origin: 1px 11px;
+        animation: arm-l 5s infinite ease-in-out;
+      }
+      .arm-r {
+        transform-origin: 14px 11px;
+        animation: arm-r 5s infinite ease-in-out;
+      }
+
+      .sun-rise { animation: sun-rise 5s infinite ease-in-out; }
+      .sun-rays {
+        transform-origin: 16px -2px;
+        animation: rays-flash 5s infinite ease-out;
+      }
+
+      .shadow {
+        transform-box: fill-box;
+        transform-origin: 50% 50%;
+        animation: shadow 5s infinite ease-in-out;
+      }
+
+      /* --- Keyframes --- */
+
+      @keyframes body-stretch {
+        0%, 100% { transform: scale(1.12, 0.75); }
+        11%      { transform: scale(1.14, 0.73); }
+        22%      { transform: scale(1.12, 0.75); }
+        40%      { transform: scale(0.92, 1.1); }
+        52%      { transform: scale(0.92, 1.1); }
+        58%      { transform: scale(1.06, 0.92); }
+        62%      { transform: scale(0.97, 1.05); }
+        66%, 86% { transform: scale(1, 1); }
+        96%      { transform: scale(1.12, 0.75); }
+      }
+
+      @keyframes eyes-shut {
+        0%, 29%   { opacity: 1; }
+        30%, 53%  { opacity: 0; }
+        54%, 57%  { opacity: 1; }
+        58%, 87%  { opacity: 0; }
+        88%, 100% { opacity: 1; }
+      }
+      /* Yawn: eyes squeezed shut (squint chevrons) at the top of the stretch */
+      @keyframes eyes-yawn {
+        0%, 29%   { opacity: 0; }
+        30%, 53%  { opacity: 1; }
+        54%, 100% { opacity: 0; }
+      }
+      @keyframes eyes-open {
+        0%, 57%   { opacity: 0; }
+        58%, 87%  { opacity: 1; }
+        88%, 100% { opacity: 0; }
+      }
+      @keyframes eyes-pop {
+        0%, 57%  { transform: scale(1); }
+        58%      { transform: scale(1.4); }
+        64%, 100% { transform: scale(1); }
+      }
+
+      /* Curled: tucked low against the squashed torso.
+         Raised: stretched long (scaleY 2) and tilted outward, rooted on the torso's top corner. */
+      @keyframes arm-l {
+        0%, 22%, 96%, 100% { transform: translate(0.5px, 1.5px); }
+        40%      { transform: translate(2.2px, -4.6px) rotate(-18deg) scale(1, 2); }
+        44%      { transform: translate(2.2px, -4.8px) rotate(-24deg) scale(1, 2.05); }
+        48%      { transform: translate(2.2px, -4.6px) rotate(-16deg) scale(1, 2); }
+        52%      { transform: translate(2.2px, -4.8px) rotate(-22deg) scale(1, 2.05); }
+        58%      { transform: translate(0, 0.5px); }
+        66%, 86% { transform: translate(0, 0); }
+      }
+      @keyframes arm-r {
+        0%, 22%, 96%, 100% { transform: translate(-0.5px, 1.5px); }
+        40%      { transform: translate(-2.2px, -4.6px) rotate(18deg) scale(1, 2); }
+        44%      { transform: translate(-2.2px, -4.8px) rotate(24deg) scale(1, 2.05); }
+        48%      { transform: translate(-2.2px, -4.6px) rotate(16deg) scale(1, 2); }
+        52%      { transform: translate(-2.2px, -4.8px) rotate(22deg) scale(1, 2.05); }
+        58%      { transform: translate(0, 0.5px); }
+        66%, 86% { transform: translate(0, 0); }
+      }
+
+      @keyframes sun-rise {
+        0%, 26%  { transform: translate(0, 2.5px); opacity: 0; }
+        58%, 86% { transform: translate(0, 0); opacity: 1; }
+        96%, 100% { transform: translate(0, 2.5px); opacity: 0; }
+      }
+
+      @keyframes rays-flash {
+        0%, 56%   { transform: scale(0.6); opacity: 0; }
+        58%       { transform: scale(0.8); opacity: 1; }
+        61%       { transform: scale(1.3); opacity: 1; }
+        68%       { transform: scale(1); opacity: 0.9; }
+        77%       { transform: scale(1.08); opacity: 0.85; }
+        86%       { transform: scale(1); opacity: 0.85; }
+        92%, 100% { transform: scale(0.6); opacity: 0; }
+      }
+
+      @keyframes shadow {
+        0%, 22%, 96%, 100% { transform: scaleX(1.15); }
+        40%, 52% { transform: scaleX(0.9); }
+        58%      { transform: scaleX(1.06); }
+        66%, 86% { transform: scaleX(1); }
+      }
+    </style>
+  </defs>
+
+  <!-- Sun: up in the top-right sky, clear of Clawd; fades in and floats up a little -->
+  <g class="sun-rise">
+    <g class="sun-rays" fill="#FFB300">
+      <rect x="15.6" y="-6.6" width="0.8" height="1.3"/>
+      <rect x="15.6" y="-6.6" width="0.8" height="1.3" transform="rotate(45 16 -2)"/>
+      <rect x="15.6" y="-6.6" width="0.8" height="1.3" transform="rotate(90 16 -2)"/>
+      <rect x="15.6" y="-6.6" width="0.8" height="1.3" transform="rotate(135 16 -2)"/>
+      <rect x="15.6" y="-6.6" width="0.8" height="1.3" transform="rotate(180 16 -2)"/>
+      <rect x="15.6" y="-6.6" width="0.8" height="1.3" transform="rotate(225 16 -2)"/>
+      <rect x="15.6" y="-6.6" width="0.8" height="1.3" transform="rotate(270 16 -2)"/>
+      <rect x="15.6" y="-6.6" width="0.8" height="1.3" transform="rotate(315 16 -2)"/>
+    </g>
+    <g fill="#FFC83D">
+      <rect x="14.5" y="-5" width="3" height="1"/>
+      <rect x="13.5" y="-4" width="5" height="4"/>
+      <rect x="14.5" y="0" width="3" height="1"/>
+    </g>
+    <rect x="14.5" y="-4" width="1" height="1" fill="#FFE082"/>
+  </g>
+
+  <!-- Ground Shadow -->
+  <rect class="shadow" x="3" y="15" width="9" height="1" fill="#000000" opacity="0.5"/>
+
+  <!-- Legs (extended 1x3, static, overlap torso bottom) -->
+  <g fill="#DE886D">
+    <rect x="3" y="12" width="1" height="3"/>
+    <rect x="5" y="12" width="1" height="3"/>
+    <rect x="9" y="12" width="1" height="3"/>
+    <rect x="11" y="12" width="1" height="3"/>
+  </g>
+
+  <!-- Torso + eyes squash/stretch from the feet -->
+  <g class="body">
+    <rect x="2" y="6" width="11" height="7" fill="#DE886D"/>
+
+    <!-- Shut eyes "- -" -->
+    <g class="eyes-shut" fill="#000000">
+      <rect x="3.7" y="9.2" width="1.6" height="0.45"/>
+      <rect x="9.7" y="9.2" width="1.6" height="0.45"/>
+    </g>
+
+    <!-- Yawn-squeezed eyes "> <" -->
+    <g class="eyes-yawn" fill="none" stroke="#000000" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="3.6,8.4 5.1,9.2 3.6,10"/>
+      <polyline points="11.4,8.4 9.9,9.2 11.4,10"/>
+    </g>
+
+    <!-- Open eyes, pop in on wake -->
+    <g class="eyes-open">
+      <g class="eyes-pop" fill="#000000">
+        <rect x="4" y="8" width="1" height="2"/>
+        <rect x="10" y="8" width="1" height="2"/>
+      </g>
+    </g>
+  </g>
+
+  <!-- Arms (drawn after torso) -->
+  <g class="arm-l">
+    <rect x="0" y="9" width="2" height="2" fill="#DE886D"/>
+  </g>
+  <g class="arm-r">
+    <rect x="13" y="9" width="2" height="2" fill="#DE886D"/>
+  </g>
+</svg>
